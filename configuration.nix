@@ -8,6 +8,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./virt/libvirt.nix
+      /home/mugen/.config/home-manager/system_config.nix
     ];
   
   # Bootloader.
@@ -16,9 +17,11 @@
 
   boot.initrd.kernelModules = ["amdgpu"];
   boot.kernelParams = [
-    "video=DP-1:3840x2160@60"
-    "video=DP-2:2560x1440@120"
   ];
+  # boot.kernelParams = [
+  #   "video=DP-1:3840x2160@60"
+  #   "video=DP-2:2560x1440@120"
+  # ];
 
   # Enable OpenGL
   hardware.opengl = {
@@ -36,6 +39,9 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Autocompletion for systemd in zsh
   programs.zsh.enable = true;
+  # Adhoc execution of binaries;
+  programs.nix-ld.enable = true;
+
   environment.shells = with pkgs; [ zsh ];
   environment.pathsToLink = [ "/share/zsh" ];
   users.defaultUserShell = pkgs.zsh;
@@ -119,7 +125,7 @@
   users.users.mugen = {
     isNormalUser = true;
     description = "Mugen";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -190,6 +196,11 @@
     };
   };
 
+  
+  fileSystems."/media/Linux_storage" = {
+    device = "/dev/sdb2";
+    options = [ "nofail" ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
