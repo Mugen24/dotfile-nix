@@ -198,7 +198,7 @@
 
   
   fileSystems."/media/Linux_storage" = {
-    device = "/dev/sdb2";
+    device = "/dev/730269e9-6f16-47a1-814e-e62cf3fd72bb";
     options = [ "nofail" ];
   };
 
