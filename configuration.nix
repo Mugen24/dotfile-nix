@@ -8,20 +8,15 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./virt/libvirt.nix
-      /home/mugen/.config/home-manager/system_config.nix
+      ./system_config.nix
     ];
   
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-
   boot.initrd.kernelModules = ["amdgpu"];
   boot.kernelParams = [
   ];
-  # boot.kernelParams = [
-  #   "video=DP-1:3840x2160@60"
-  #   "video=DP-2:2560x1440@120"
-  # ];
 
   # Enable OpenGL
   hardware.opengl = {
@@ -198,8 +193,8 @@
 
   
   fileSystems."/media/Linux_storage" = {
-    device = "/dev/730269e9-6f16-47a1-814e-e62cf3fd72bb";
-    options = [ "nofail" ];
+    device = "/dev/disk/by-uuid/730269e9-6f16-47a1-814e-e62cf3fd72bb";
+    options = [ "users" "nofail" ];
   };
 
   # This value determines the NixOS release from which the default
