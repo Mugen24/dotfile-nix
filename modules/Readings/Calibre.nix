@@ -12,5 +12,7 @@ in
         ];
         services.calibre-server = {
             enable = true;
+            port = 8112;
+            openFirewall = true;
         };
     }

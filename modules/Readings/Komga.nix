@@ -1,4 +1,4 @@
-{ username, pkgs, ... }: 
+{ pkgs, user, ... }: 
 let 
     #TODO: make this configurable
     mangaPath = "/media/Linux_storage/Media/Readings/Comics";
@@ -15,7 +15,7 @@ in
 
         services.komga = {
             enable = true;
-            user = username;
+            user = user;
             stateDir = "/var/lib/komga";
             port = 9111;
             openFirewall = true;
@@ -23,7 +23,7 @@ in
 
         services.suwayomi-server = {
              enable = true;
-             user = username;
+             user = user;
              settings = {
                  server = {
                      downloadAsCbz = true;
