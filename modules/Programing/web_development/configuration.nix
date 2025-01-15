@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
-	home.packages = with pkgs; [
-		nodejs_22
-		typescript
-	];
+	home-manager.users.${user} = {
+		home.packages = with pkgs; [
+			nodejs_22
+			typescript
+		];
+	};
 }
 
