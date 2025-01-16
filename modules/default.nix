@@ -6,5 +6,6 @@
     ./Shell
     ./Other
     ./home.nix
+    ./Readings
   ];
 }

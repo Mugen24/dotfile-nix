@@ -1,10 +1,58 @@
-{ config, nixpkgs, user, ... }:
+{ config, pkgs, user, ... }:
 
 let
   userEmail = "John.nguyen1022@gmail.com";
   name = "John Nguyen";
 in
 {
+  environment.systemPackages = with pkgs; [
+    # # Adds the 'hello' command to your environment. It prints a friendly
+    # # "Hello, world!" when run.
+    firefox
+    rofi
+    arandr
+    kitty
+    wget
+    curl
+    python3
+    gparted
+    kdePackages.okular
+    pdfarranger
+    libsForQt5.dolphin
+    cinnamon.nemo
+    cinnamon.nemo-fileroller
+
+    btop
+    onlyoffice-bin
+    libreoffice-qt6-fresh
+    vlc
+    gpick
+    brightnessctl
+    chromium
+    networkmanagerapplet
+    obsidian
+
+    #Photo viewer
+    digikam
+    # screenshot
+    ksnip
+
+    # # It is sometimes useful to fine-tune packages, for example, by applying
+    # # overrides. You can do that directly here, just don't forget the
+    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+    # # fonts?
+    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    # # You can also create simple shell scripts directly inside your
+    # # configuration. For example, this adds a command 'my-hello' to your
+    # # environment:
+    # (pkgs.writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
+
+    # Indexing nix store
+    nix-index
+  ];
   home-manager.users.${user} = {
     # imports = [
     #   ./Shell/zsh.nix
@@ -45,54 +93,6 @@ in
 
     # The home.packages option allows you to install Nix packages into your
     # environment.
-    programs.packages = with nixpkgs; [
-      # # Adds the 'hello' command to your environment. It prints a friendly
-      # # "Hello, world!" when run.
-      firefox
-      rofi
-      arandr
-      kitty
-      wget
-      curl
-      python3
-      gparted
-      kdePackages.okular
-      pdfarranger
-      libsForQt5.dolphin
-      cinnamon.nemo
-      cinnamon.nemo-fileroller
-
-      btop
-      onlyoffice-bin
-      libreoffice-qt6-fresh
-      vlc
-      gpick
-      brightnessctl
-      chromium
-      networkmanagerapplet
-      obsidian
-
-      #Photo viewer
-      digikam
-      # screenshot
-      ksnip
-
-      # # It is sometimes useful to fine-tune packages, for example, by applying
-      # # overrides. You can do that directly here, just don't forget the
-      # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-      # # fonts?
-      # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-      # # You can also create simple shell scripts directly inside your
-      # # configuration. For example, this adds a command 'my-hello' to your
-      # # environment:
-      # (pkgs.writeShellScriptBin "my-hello" ''
-      #   echo "Hello, ${config.home.username}!"
-      # '')
-
-      # Indexing nix store
-      nix-index
-    ];
 
     # Home Manager is pretty good at managing dotfiles. The primary way to manage
     # plain files is through 'home.file'.
@@ -133,7 +133,7 @@ in
       enable = true;
       viAlias = true;
       vimAlias = true;
-      plugins = with nixpkgs.vimPlugins; [
+      plugins = with pkgs.vimPlugins; [
         vim-sleuth
         mason-nvim
         nvim-lspconfig 

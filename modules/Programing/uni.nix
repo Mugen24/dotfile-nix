@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
-  home.packages = with pkgs; [
-    teams-for-linux    
-    docker_27
-    docker-compose
-  ];
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      teams-for-linux    
+      docker_27
+      docker-compose
+    ];
+  };
 }
 

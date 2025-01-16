@@ -22,17 +22,25 @@
     # };
   in
   {
-    nixosConfigurations."mugen" = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.${user} = nixpkgs.lib.nixosSystem {
       system = system;
       specialArgs = {
         device = device;
         user = user;
       };
       modules = [
+        {
+          nixpkgs.config.allowUnfree = true;
+        }
         ./configuration.nix
-        home-manager.nixosModules.home-manager {
+        ./modules
+        home-manager.nixosModules.home-manager
+        {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.users.${user} = {
+            imports = [];
+          };
         }
       ];
     };

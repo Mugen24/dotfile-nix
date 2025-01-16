@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
-  home.packages = with pkgs; [
-    ollama
-  ];
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      ollama
+    ];
+  };
 }
 

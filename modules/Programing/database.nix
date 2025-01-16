@@ -1,8 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, ... }:
 
 {
-  home.packages = with pkgs; [
-    pgadmin4
-  ];
+  home-manager.users.${user} = {
+    home.packages = with pkgs; [
+      pgadmin4
+    ];
+  };
 }
 
