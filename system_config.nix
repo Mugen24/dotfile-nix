@@ -9,6 +9,9 @@ in
   # imports = [
   #   (import ./system_modules/Readings/default.nix { username = username; pkgs = pkgs; })
   # ];
+  imports = [
+    ./.
+  ];
 
   hardware.opengl.extraPackages = with pkgs; [
     rocmPackages.clr.icd
@@ -22,9 +25,9 @@ in
   environment.pathsToLink = [ "/share/zsh" ];
   users.defaultUserShell = pkgs.zsh;
 
-  services.xserver.windowManager.qtile = {
-    configFile = ./config/qtile/config.py;
-  }; 
+  # services.xserver.windowManager.qtile = {
+  #   configFile = ./config/qtile/config.py;
+  # }; 
 
   virtualisation.docker.enable = true;
 

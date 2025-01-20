@@ -187,7 +187,7 @@ extension_defaults = widget_defaults.copy()
 
 screens = [
      Screen(
-         wallpaper='~/.config/home-manager/config/qtile/neon_shallows.png', 
+         wallpaper='./wallpapers/neon_shallows.png', 
          wallpaper_mode='fill',
          bottom=bar.Bar(
              [
@@ -219,6 +219,8 @@ screens = [
          # x11_drag_polling_rate = 60,
      ),
      Screen(
+         wallpaper='./wallpapers/neon_shallows.png', 
+         wallpaper_mode='fill',
          bottom=bar.Bar(
              [
                  widget.CurrentLayout(),
