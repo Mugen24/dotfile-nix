@@ -28,6 +28,9 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.log_utils import logger
+from os import getenv
+
+# THEME = getenv("USER_THEME")
 
 mod = "mod4"
 # terminal = guess_terminal()
@@ -219,6 +222,8 @@ screens = [
          # x11_drag_polling_rate = 60,
      ),
      Screen(
+         wallpaper='~/.config/home-manager/config/qtile/neon_shallows.png', 
+         wallpaper_mode='fill',
          bottom=bar.Bar(
              [
                  widget.CurrentLayout(),
