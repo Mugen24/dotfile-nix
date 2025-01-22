@@ -4,11 +4,11 @@ let
   cfg = config.theme;
 in
 {
-  options = {
+  options.theme = {
     enable = mkEnableOption "Device wide customisation";
     customisation = mkOption {
-      type = types.enum ["cyberpunk"];
-      default = "cyberpunk" ;
+      type = types.enum ["cyberpunk" "shallow"];
+      default = "shallow" ;
       description = ''
 	Apply a system-wide theme currently will only effect:
 	  WM: 

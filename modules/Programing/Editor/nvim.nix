@@ -28,19 +28,33 @@
             vim.cmd[[colorscheme dracula]]
           ";
         }
-        # {
-        #   plugin = nvim-treesitter;
-        #   type = "lua";
-        #   config = ''
-        #     require('nvim-treesitter.configs').setup({
-        #       ensure_installed = "all",
-        #       parser_install_dir = "~/.config/nvim",
-        #       highlight = {
-        #         enable = true,
-        #       },
-        #     })
-        #   '';
-        # }
+
+        # if nvim keeps reinstalling or having problem
+        # run this rm -rf ~/.local/share/nvim/*
+        # https://old.reddit.com/r/neovim/comments/110x08m/treesitter_keeps_recompiling_parsers/
+        # or run this to find what to remove
+        # find . -name nvim
+
+        # Remove cached file: https://github.com/folke/lazy.nvim/issues/582#issuecomment-1439540455
+        
+        # Needs to have parser_install_dir to be ~/.config/nvim or it will install parser every run
+        # If and error occurs with smth delimiter. Run :TSUpdate first to bring the parser up-to-date with treesitter
+        {
+           plugin = nvim-treesitter;
+           type = "lua";
+           config = ''
+             require('nvim-treesitter.configs').setup({
+                -- ensure_installed = "all",
+                -- has to be this
+                parser_install_dir = "~/.config/nvim",
+                highlight = {
+                  enable = true,
+                  disable = {"help"}
+                },
+             })
+           '';
+        }
+
         {
           # Shows line indent
           plugin = indent-blankline-nvim;
@@ -87,6 +101,8 @@
               defaults = {
                 wrap_results = true,
               }
+
+
             })
             local builtin = require('telescope.builtin')
             -- Find files
@@ -104,6 +120,7 @@
             vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'Try to fix error with code'})
           '';
         }
+
 
         {
           plugin = rainbow-delimiters-nvim;
@@ -278,6 +295,13 @@
             require("nvim-tree").setup()
             local nvim_tree = require("nvim-tree.api")
             vim.keymap.set("n", "<leader>z", nvim_tree.tree.toggle)
+          '';
+        }
+        {
+          plugin = colorizer;
+          type = "lua";
+          config = ''
+            require'colorizer'.setup()
           '';
         }
 

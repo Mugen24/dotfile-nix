@@ -12,8 +12,15 @@ function CreateTerm()
 end
 
 function CloseTerm()
+    vim.print("close term")
     if vim.fn.winnr("$") > 1 then
-        vim.cmd.close()
+        local handle = vim.fn.bufnr(curr_term)
+        vim.print(handle)
+        local winid = vim.fn.bufwinid(handle)
+        vim.print(winid)
+        -- vim.api.nvim_buf_delete(handle, {unload = true})
+        vim.api.nvim_win_close(winid, true)
+        --vim.cmd.close()
     end
 end
 
@@ -89,16 +96,25 @@ vim.keymap.set({"n", "t"}, "\\",
             vim.print("h", toggle)
             vim.print("false ->", toggle)
         elseif toggle == true then
-            toggle = false
-            CloseTerm()
-            vim.print("h", toggle)
-            vim.print("true ->", toggle)
+            local bufnr = vim.fn.bufnr(curr_term)
+            local buf_winid = vim.fn.bufwinid(bufnr)
+            local focused_winid = vim.api.nvim_get_current_win()
+            if buf_winid == focused_winid then
+                toggle = false
+                CloseTerm()
+                vim.print("h", toggle)
+                vim.print("true ->", toggle)
+            else
+                vim.api.nvim_set_current_win(buf_winid)
+            end
         end
     end,
     {
         desc = "Invoke terminal"
     }
 )
+
+vim.keymap.set({"t"}, "<a-k>", "<C-\\><C-n><C-w>k")
 
 ----------------------------
 local finders = require "telescope.finders"

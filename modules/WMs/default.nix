@@ -11,7 +11,7 @@ in
   config = mkIf cfg.enable {
     services.xserver.windowManager.qtile = {
       enable = true;
-      configFile = ./config.py;
+      configFile = ./qtile/config.py;
     };
   };
 }
