@@ -9,6 +9,7 @@ in
   # imports = [
   #   (import ./system_modules/Readings/default.nix { username = username; pkgs = pkgs; })
   # ];
+
   imports = [
     ./.
   ];
@@ -98,4 +99,8 @@ in
 
   boot.loader.grub.configurationLimit = 3;
   boot.loader.systemd-boot.configurationLimit = 3;
+
+  services.picom = {
+    enable = true;
+  };
 }

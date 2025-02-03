@@ -1,0 +1,7 @@
+{
+    "include": ["."],
+    "extraPaths": [
+        "/nix/store/z5zkqikc1fs7y7i5nw90m1yg6n1yi1na-python3.11-qtile-0.25.0/lib/python3.11/site-packages",
+        "/nix/store/n0ffwnc4fs12yhbwzgb86i5xxagppiqp-python3.12-qtile-extras-0.29.0/lib/python3.12/site-packages"
+    ]
+}

@@ -23,24 +23,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+from sys import exception
 from libqtile import bar, layout, qtile, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.log_utils import logger
 from os import getenv
-
-PROJECT_ROOT = getenv("USER_ROOT")
-THEME = getenv("USER_THEME")
-
-MONITORS: int = int(getenv("USER_MONITORS_LIST", "1"))
-WALLPAPER = f"{PROJECT_ROOT}/modules/WMs/wallpapers/default.jpg"
-SCHEMA = None
-
-if THEME == "shallow":
-    WALLPAPER = f"{PROJECT_ROOT}/modules/WMs/wallpapers/neon_shallows.png"
-    SCHEMA = f"{PROJECT_ROOT}/customisation_config/shallow/scheme.json"
-
+import json
+from constants import *
+from widgets import screens, setgroup
 
 
 mod = "mod4"
@@ -136,8 +128,9 @@ for vt in range(1, 8):
 
 
 
-groups = [Group(i, screen_affinity = 0) for i in "12345"]
-groups.extend([Group(i, screen_affinity = 1) for i in "67890"])
+groups = [Group(i, screen_affinity = 0, label="") for i in "12345"]
+groups.extend([Group(i, screen_affinity = 1, label="") for i in "67890"])
+
 @lazy.function
 def switch_callback(qtile, group_name):
     # logger.warning("testing")
@@ -163,11 +156,9 @@ for i in groups:
             Key(
                 [mod, "shift"],
                 i.name,
-                lazy.window.togroup(i.name, switch_group=True),
+                lazy.window.togroup(i.name, switch_group=False),
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod + shift + group number = move focused window to group
             # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
             #     desc="move focused window to group {}".format(i.name)),
         ]
@@ -199,35 +190,45 @@ widget_defaults = dict(
  )
 extension_defaults = widget_defaults.copy()
 
-screens = [
-    Screen(
-        wallpaper=WALLPAPER,
-        wallpaper_mode='fill',
-        bottom=bar.Bar(
-        [
-            widget.CurrentLayout(),
-            widget.GroupBox(),
-            # widget.Prompt(),
-            widget.WindowName(),
-            widget.Chord(
-                chords_colors={
-                    "launch": ("#ff0000", "#ffffff"),
-                },
-                name_transform=lambda name: name.upper(),
-            ),
-            # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
-            # widget.StatusNotifier(),
-            # widget.Systray(),
-            widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
-        ],
-        24,
-     # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-     # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-)
-,
-    )
-    for _ in range(0, MONITORS)
-]
+# screens = [
+#     Screen(
+#         wallpaper=WALLPAPER,
+#         wallpaper_mode='fill',
+#         bottom=bar.Bar(
+#         [
+#             widget.CurrentLayout(),
+#             widget.GroupBox(),
+#             # widget.Prompt(),
+#             widget.WindowName(),
+#             widget.Chord(
+#                 chords_colors={
+#                     "launch": ("#ff0000", "#ffffff"),
+#                 },
+#                 name_transform=lambda name: name.upper(),
+#             ),
+#             # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
+#             # widget.StatusNotifier(),
+#             widget.Systray(),
+#             widget.Clock(format="%Y-%m-%d %a %I:%M %p"),
+#         ],
+#         24,
+#      # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+#      # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+#         )
+#     )
+# ]
+# 
+# import widgets
+# screens = screens + [
+#     Screen(
+#         wallpaper=WALLPAPER,
+#         wallpaper_mode='fill',
+#         bottom=bar.Bar(widgets.main_widget(), 24, background = "#111111")
+#      # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+#      # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+#     )
+#     for _ in range(1, MONITORS)
+# ]
 
 # Drag floating layouts.
 mouse = [

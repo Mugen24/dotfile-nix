@@ -29,5 +29,16 @@ in
       USER_THEME = cfg.customisation;
       USER_MONITORS_LIST = cfg.monitors_list;
     };
+
+    fonts.packages = with pkgs; [
+      emacsPackages.all-the-icons-nerd-fonts
+      # nerd-fonts.symbols-only
+      # nerd-fonts.jetbrains-mono
+      # nerd-fonts.code-new-roman
+      # nerd-fonts.sauce-code-pro
+      
+      # (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+      nerdfonts
+    ];
   };
 }

@@ -298,10 +298,10 @@
           '';
         }
         {
-          plugin = colorizer;
+          plugin = nvim-colorizer-lua;
           type = "lua";
           config = ''
-            require'colorizer'.setup()
+            require("colorizer").setup()
           '';
         }
 
@@ -315,6 +315,7 @@
         pkgs.cargo
         pkgs.ripgrep
         pkgs.python311Packages.flake8
+        pkgs.luajit
       ];
     };
   };
