@@ -1,7 +1,8 @@
 {lib, pkgs, config, ...}: {
   imports = [
-    ./modules/WMs/default.nix
+    ./modules/WMs
     ./theme_customisation.nix
+    ./modules/Gaming
   ];
   
   qtile_mod = {
@@ -14,4 +15,6 @@
   environment.variables = {
     USER_ROOT = "/etc/nixos";
   };
+
+  gaming.enable = true;
 }
