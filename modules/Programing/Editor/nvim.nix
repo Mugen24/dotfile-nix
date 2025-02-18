@@ -38,21 +38,21 @@
         # Remove cached file: https://github.com/folke/lazy.nvim/issues/582#issuecomment-1439540455
         
         # Needs to have parser_install_dir to be ~/.config/nvim or it will install parser every run
-        # If and error occurs with smth delimiter. Run :TSUpdate first to bring the parser up-to-date with treesitter
+        # If an error occurs with smth delimiter. Run :TSUpdate first to bring the parser up-to-date with treesitter
         {
-           plugin = nvim-treesitter;
-           type = "lua";
-           config = ''
-             require('nvim-treesitter.configs').setup({
-                -- ensure_installed = "all",
-                -- has to be this
-                parser_install_dir = "~/.config/nvim",
-                highlight = {
-                  enable = true,
-                  disable = {"help"}
-                },
-             })
-           '';
+            plugin = nvim-treesitter;
+            type = "lua";
+            config = ''
+              require('nvim-treesitter.configs').setup({
+                 -- ensure_installed = "all",
+                 -- has to be this
+                 parser_install_dir = "~/.config/nvim",
+                 highlight = {
+                   enable = true,
+                   disable = {"help"}
+                 },
+              })
+            '';
         }
 
         {
@@ -94,17 +94,55 @@
         }
 
         {
+          plugin = telescope-fzf-native-nvim;
+          type = "lua";
+        }
+
+        {
+          plugin = telescope-file-browser-nvim;
+          type = "lua";
+        }
+
+        {
           plugin = telescope-nvim;
           type = "lua";
           config = ''
             require('telescope').setup({
               defaults = {
                 wrap_results = true,
-              }
+              },
+              extensions = {
+                file_browser = {
+                  theme = "ivy",
+                  -- disables netrw and use telescope-file-browser in its place
+                  hijack_netrw = true,
+                  auto_depth = 5,
+                  use_fd = true,
+                  mappings = {
+                    ["i"] = {
+                      -- your custom insert mode mappings
+                    },
+                    ["n"] = {
+                      -- your custom normal mode mappings
+                    },
+                  },
+                },
+                
+                fzf = {
+                  fuzzy = true,                    -- false will only do exact matching
+                  override_generic_sorter = true,  -- override the generic sorter
+                  override_file_sorter = true,     -- override the file sorter
+                  case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                                   -- the default case_mode is "smart_case"
+                },
 
-
+              },
             })
             local builtin = require('telescope.builtin')
+            -- To get fzf loaded and working with telescope, you need to call
+            -- load_extension, somewhere after setup function:
+            require('telescope').load_extension('fzf')
+
             -- Find files
             vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
             -- Find string in Files
@@ -118,6 +156,23 @@
             vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open error under cursor'})
 
             vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'Try to fix error with code'})
+
+            -- Telescope File browser
+
+            require("telescope").load_extension("file_browser")
+
+            vim.keymap.set("n", "<space>fe", ":Telescope file_browser<CR>")
+
+            -- open file_browser with the path of the current buffer
+            -- vim.keymap.set("n", "<space>fe", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
+
+            -- Alternatively, using lua API
+            -- vim.keymap.set("n", "<space>fe", function()
+            --     require("telescope").extensions.file_browser.file_browser()
+            -- end)
+
+
+
           '';
         }
 
@@ -288,15 +343,15 @@
           '';
         }
 
-        {
-          plugin = nvim-tree-lua;
-          type = "lua";
-          config = ''
-            require("nvim-tree").setup()
-            local nvim_tree = require("nvim-tree.api")
-            vim.keymap.set("n", "<leader>z", nvim_tree.tree.toggle)
-          '';
-        }
+        # {
+        #   plugin = nvim-tree-lua;
+        #   type = "lua";
+        #   config = ''
+        #     require("nvim-tree").setup()
+        #     local nvim_tree = require("nvim-tree.api")
+        #     vim.keymap.set("n", "<leader>z", nvim_tree.tree.toggle)
+        #   '';
+        # }
         {
           plugin = nvim-colorizer-lua;
           type = "lua";
@@ -316,6 +371,7 @@
         pkgs.ripgrep
         pkgs.python311Packages.flake8
         pkgs.luajit
+        pkgs.fd
       ];
     };
   };

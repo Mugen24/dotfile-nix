@@ -8,6 +8,9 @@
   qtile_mod = {
     enable = true;
   };
+  unsw = {
+    enable = true;
+  };
   theme = {
     enable = true;
     monitors_list = 2;
