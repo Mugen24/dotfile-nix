@@ -14,7 +14,7 @@ in
     ./.
   ];
 
-  hardware.opengl.extraPackages = with pkgs; [
+  hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd
   ];
 
@@ -47,7 +47,6 @@ in
     wget
     neovim
     firefox
-    vesktop
     home-manager
     kitty
     xorg.xinit

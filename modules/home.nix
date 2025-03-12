@@ -19,8 +19,10 @@ in
     kdePackages.okular
     pdfarranger
     libsForQt5.dolphin
-    cinnamon.nemo
-    cinnamon.nemo-fileroller
+    nemo
+    nemo-fileroller
+    discord
+    vencord
 
     btop
     onlyoffice-bin

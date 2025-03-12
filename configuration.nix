@@ -18,7 +18,7 @@
   ];
 
   # Enable OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       vulkan-loader
@@ -70,7 +70,9 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  services.displayManager = {
+    enable = true;
+  };
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
@@ -81,8 +83,10 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "au";
-    xkbVariant = "";
+    xkb = {
+      variant = "";
+      layout = "au";
+    };
   };
 
   # Enable CUPS to print documents.
@@ -125,8 +129,8 @@
 
 
   # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "mugen";
+  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "mugen";
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;
@@ -147,7 +151,6 @@
     wget
     neovim
     firefox
-    vesktop
     home-manager
     kitty
     xorg.xinit
