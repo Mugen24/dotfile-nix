@@ -3,6 +3,7 @@
     ./modules/WMs
     ./theme_customisation.nix
     ./modules/Gaming
+    ./modules/unsw
   ];
   
   qtile_mod = {

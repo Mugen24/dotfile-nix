@@ -227,6 +227,21 @@
                            }
                         }
                       })
+                    elseif server_name == "shellcheck" then
+                      require("lspconfig")["shellcheck"].setup({
+                        settings = {
+                           python = {
+                              analysis = {
+                                autoSearchPaths = true,
+                                diagnosticMode = "openFilesOnly",
+                                useLibraryCodeForTypes = true,
+                                autoImportCompletions = true,
+                                typeCheckingMode = "strict",
+                              }
+                           }
+                        }
+                      })
+
                     else 
                       require("lspconfig")[server_name].setup {}
                     end
@@ -372,6 +387,8 @@
         pkgs.python311Packages.flake8
         pkgs.luajit
         pkgs.fd
+        pkgs.shellcheck
+        pkgs.shfmt
       ];
     };
   };
