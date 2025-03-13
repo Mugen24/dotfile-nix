@@ -96,8 +96,8 @@ in
       CALIBRE_PYTHON_PATH = "/home/mugen/App/calibre";
   };
 
-  boot.loader.grub.configurationLimit = 3;
-  boot.loader.systemd-boot.configurationLimit = 3;
+  boot.loader.grub.configurationLimit = 5;
+  boot.loader.systemd-boot.configurationLimit = 5;
 
   services.picom = {
     enable = true;
