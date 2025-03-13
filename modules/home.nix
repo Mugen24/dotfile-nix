@@ -22,6 +22,8 @@ in
     nemo
     nemo-fileroller
     (discord.override {
+      # https://github.com/NixOS/nixpkgs/issues/208749
+      # Run ordinary Discord once (without OpenAsar) so it downloads its main files, then it should run fine with OpenAsar
       withOpenASAR = true; 
       withVencord = true;
     })

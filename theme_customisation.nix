@@ -38,7 +38,7 @@ in
       # nerd-fonts.sauce-code-pro
       
       # (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
-      nerdfonts
-    ];
+      # nerdfonts
+    ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   };
 }
