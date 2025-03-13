@@ -21,8 +21,10 @@ in
     libsForQt5.dolphin
     nemo
     nemo-fileroller
-    discord
-    vencord
+    (discord.override {
+      withOpenASAR = true; 
+      withVencord = true;
+    })
 
     btop
     onlyoffice-bin
