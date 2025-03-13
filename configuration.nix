@@ -81,11 +81,12 @@
   # services.xserver.windowManager.qtile.backend = "wayland";
 
   # Configure keymap in X11
-  services.xserver = {
-    xkb = {
-      layout = "au";
-    };
-  };
+ services.xserver = {
+   enable = true;  
+   xkb = {
+     layout = "au";
+   };
+ };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
