@@ -275,3 +275,13 @@ wl_input_rules = None
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
+
+#### Game only group
+from game import game_group, group_name
+groups.append(game_group)
+
+game_key = Key([mod], "g",
+            switch_callback(group_name),
+            desc="Switch gaming group")
+
+keys.append(game_key)
