@@ -83,6 +83,7 @@
   # Configure keymap in X11
  services.xserver = {
    enable = true;  
+   videoDrivers = ["amdgpu"];
    xkb = {
      layout = "au";
    };
@@ -145,7 +146,17 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   programs.steam.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    };
+  };
   environment.systemPackages = with pkgs; [
+    # Required to get steam permission working
+    # when adding more storage location
+    # xdg-desktop-portal
+    xdg-desktop-portal-gtk
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     neovim
@@ -193,7 +204,7 @@
   
   fileSystems."/media/Linux_storage" = {
     device = "/dev/disk/by-uuid/730269e9-6f16-47a1-814e-e62cf3fd72bb";
-    options = [ "users" "nofail" ];
+    options = [ "users" "nofail" "exec" ];
   };
 
   # This value determines the NixOS release from which the default

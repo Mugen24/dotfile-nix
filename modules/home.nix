@@ -5,6 +5,7 @@ let
   name = "John Nguyen";
 in
 {
+
   environment.systemPackages = with pkgs; [
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -21,12 +22,13 @@ in
     libsForQt5.dolphin
     nemo
     nemo-fileroller
-    (discord.override {
-      # https://github.com/NixOS/nixpkgs/issues/208749
-      # Run ordinary Discord once (without OpenAsar) so it downloads its main files, then it should run fine with OpenAsar
-      withOpenASAR = true; 
-      withVencord = true;
-    })
+    # (discord.override {
+    #   # https://github.com/NixOS/nixpkgs/issues/208749
+    #   # Run ordinary Discord once (without OpenAsar) so it downloads its main files, then it should run fine with OpenAsar
+    #   withOpenASAR = true; 
+    #   withVencord = true;
+    # })
+    vesktop
 
     btop
     onlyoffice-bin
@@ -42,6 +44,11 @@ in
     digikam
     # screenshot
     ksnip
+
+    #task-manager like 
+    mission-center
+    nvtopPackages.full
+
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

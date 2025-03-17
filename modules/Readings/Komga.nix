@@ -21,6 +21,13 @@ in
             openFirewall = true;
         };
 
+        services.flaresolverr = {
+            enable = true;
+            openFirewall = true;
+            port = 9122;
+            package = pkgs.nur.repos.xddxdd.flaresolverr-21hsmw;
+        };
+
         services.suwayomi-server = {
              enable = true;
              user = user;

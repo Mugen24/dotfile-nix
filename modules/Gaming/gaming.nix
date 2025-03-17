@@ -1,4 +1,4 @@
-{pkgs, lib, config, ...}:
+{pkgs, lib, config, user, ...}:
 with lib;
 let 
   cfg = config.gaming;
@@ -9,7 +9,11 @@ in
         enable = mkEnableOption "Enable module";
       };
     };
+
     config = mkIf cfg.enable {
+      users.users.${user} = {
+        extraGroups = [ "gamemode" ];
+      };
       programs.java.enable = true; 
       programs.steam = {
         enable = true;
@@ -23,6 +27,15 @@ in
       xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
       xdg.portal.config.common.default = "gtk";
       services.flatpak.enable = true;
+      systemd.services.flatpak-repo = {
+        wantedBy = [ "multi-user.target" ];
+        path = [ pkgs.flatpak ];
+        script = ''
+          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+        '';
+      };
+
+      programs.gamemode.enable = true;
       # Commands that needs to be manually run for flatpak/flathub to work properly
       # https://nixos.org/manual/nixos/stable/index.html#module-services-flatpak
       # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo

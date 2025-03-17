@@ -2,6 +2,10 @@
   description = "A configuration.nix replacement";
   inputs = {
     # nixpkgs.url = "github:nixOS/nixpkgs/nixos-24.11";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -10,7 +14,7 @@
 
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, ... }: 
+  outputs = { self, nur, nixpkgs, home-manager, ... }@input: 
   let 
     system = "x86_64-linux";
     device = "main_pc";
@@ -32,6 +36,7 @@
       modules = [
         {
           nixpkgs.config.allowUnfree = true;
+          nixpkgs.overlays = [ nur.overlays.default ];
         }
         ./configuration.nix
         ./modules
