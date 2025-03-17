@@ -22,6 +22,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+"""
+REMINDER: all extra file import must also be declared to be moved over
+in default.nix
+"""
 
 from sys import exception
 from libqtile import bar, layout, qtile, widget
@@ -284,7 +288,7 @@ group_name = "Gaming"
 game_matches=[
     Match(wm_class=re.compile("steam", re.IGNORECASE))
 ]
-game_group = Group(name=group_name, screen_affinity=1, matches=game_matches)
+game_group = Group(name=group_name, screen_affinity=1, matches=game_matches, persist=False)
 game_key = Key([mod], "g",
             switch_callback(group_name),
             desc="Switch gaming group")
