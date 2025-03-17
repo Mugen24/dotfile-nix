@@ -277,11 +277,17 @@ wl_input_rules = None
 wmname = "LG3D"
 
 #### Game only group
-from game import game_group, group_name
-groups.append(game_group)
+import re
+# from game import game_group, group_name
+group_name = "Gaming"
 
+game_matches=[
+    Match(wm_class=re.compile("steam", re.IGNORECASE))
+]
+game_group = Group(name=group_name, screen_affinity=1, matches=game_matches)
 game_key = Key([mod], "g",
             switch_callback(group_name),
             desc="Switch gaming group")
 
+groups.append(game_group)
 keys.append(game_key)
