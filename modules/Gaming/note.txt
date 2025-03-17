@@ -1,0 +1,32 @@
+# Libgamemode.sh Not found
+
+Error: libgamemode.so Not Found
+
+If you encounter an error like this when launching a Steam game with GameMode:
+
+gamemodeauto: dlopen failed - libgamemode.so: cannot open shared object file: No such file or directory
+
+Follow the steps below to resolve the issue.
+
+Find Path of libgamemode.so
+
+Run this command to find the path to your libgamemode.so file:
+
+find /nix/store -name "libgamemode.so"
+
+You'll get an output similar to /nix/store/.../libgamemode.so.0.
+
+Modify Steam Launch Options
+
+Add the following to the game's launch options, replacing the path as necessary:
+
+LD_PRELOAD="$LD_PRELOAD:/nix/store/.../libgamemode.so.0" gamemoderun %command%
+
+    permalink embedsave reportreply
+
+[–]metcalsr
+ 
+[S] 2 points 1 year ago 
+
+Fixed the problem, figured I should upload my notes in case anyone else runs into this issue.
+
