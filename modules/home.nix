@@ -40,6 +40,7 @@ in
     networkmanagerapplet
     obsidian
 
+    # google-chrome
     #Photo viewer
     digikam
     # screenshot
@@ -48,6 +49,9 @@ in
     #task-manager like 
     mission-center
     nvtopPackages.full
+
+    # http-client
+    bruno
 
 
     # # It is sometimes useful to fine-tune packages, for example, by applying

@@ -16,6 +16,16 @@
   boot.kernelParams = [
   ];
 
+  boot = {
+    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
+    kernelModules = [ "v4l2loopback" ];
+    extraModprobeConfig = ''
+        # example settings
+	# options yourmodulename optionA=valueA optionB=valueB # syntax
+	options v4l2loopback video_nr=9 card_label=Video-Loopback exclusive_caps=1
+    '';
+  };
+
   # Enable OpenGL
   hardware.graphics = {
     enable = true;
@@ -205,6 +215,8 @@
     device = "/dev/disk/by-uuid/730269e9-6f16-47a1-814e-e62cf3fd72bb";
     options = [ "users" "nofail" "exec" ];
   };
+
+  # v4l2loopback video_nr=9 card_label=Video-Loopback exclusive_caps=1
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
