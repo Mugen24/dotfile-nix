@@ -14,9 +14,6 @@ in
     ./.
   ];
 
-  qtile_mod = {
-    enable = true;
-  };
 
   hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd
