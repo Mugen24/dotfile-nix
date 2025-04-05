@@ -87,7 +87,7 @@ in
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 8001 8112 8113 8080 ];
+    allowedTCPPorts = [ 8001 8112 8113 8080 8111 8116 ];
   };
 
   environment.variables = {

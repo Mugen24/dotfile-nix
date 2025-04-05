@@ -19,3 +19,29 @@
 https://discourse.nixos.org/t/what-package-provides-libstdc-so-6/18707/2
 
 
+buildInputs = with pkgs; [
+    python3
+
+    stdenv.cc.cc
+
+    # For Numpy
+    zlib
+
+    # For rendering gym environments
+    libGL
+    libGLU
+    xorg.libX11
+
+];
+
+shellHook = ''
+    # for PyTorch
+    export LD_LIBRARY_PATH=${pkgs.stdenv.cc.cc.lib}/lib
+
+    # for Numpy
+    export LD_LIBRARY_PATH=${pkgs.zlib}/lib:$LD_LIBRARY_PATH
+
+    # GL libraries (for gym environment rendering)
+    export LD_LIBRARY_PATH=${pkgs.libGL}/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=${pkgs.libGLU}/lib:$LD_LIBRARY_PATH
+'';

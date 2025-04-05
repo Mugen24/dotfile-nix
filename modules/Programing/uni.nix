@@ -8,6 +8,8 @@
       docker_27
       docker-compose
       dash
+
+      sqlitebrowser
     ];
   };
 }

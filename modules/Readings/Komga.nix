@@ -37,7 +37,8 @@ in
                      rootDir = mangaPath;
                      downloadsPath = mangaPath;
                      port = 8111;
-                     ip = "127.0.0.1";
+                     # ip = "127.0.0.1";
+                     ip = "192.168.0.36";
                  };
              };
         };
