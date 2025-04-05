@@ -64,14 +64,14 @@ in
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowUnfreePredicate = _: true;
 
-  users.users.mugen = {
-    isNormalUser = true;
-    description = "Mugen";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
-  };
+  # users.users.mugen = {
+  #   isNormalUser = true;
+  #   description = "mugen";
+  #   extraGroups = [ "networkmanager" "wheel" ];
+  #   packages = with pkgs; [
+  #   #  thunderbird
+  #   ];
+  # };
 
   #https://www.reddit.com/r/NixOS/comments/185f0x4/how_to_mount_a_usb_drive/
   # Enable auto-mouning usbdrives
