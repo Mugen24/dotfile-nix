@@ -15,6 +15,9 @@ in
   ];
 
 
+  # For devenv to setup nixcache ??
+  nix.settings.trusted-users = [ "root" "mugen" ];
+
   hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd
   ];
@@ -54,6 +57,7 @@ in
     ntfs3g
     pavucontrol
     clinfo
+    unzip
 
   ];
 
