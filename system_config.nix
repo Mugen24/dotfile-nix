@@ -14,6 +14,12 @@ in
     ./.
   ];
 
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+  nix.optimise.automatic = true;
 
   # For devenv to setup nixcache ??
   nix.settings.trusted-users = [ "root" "mugen" ];
@@ -26,6 +32,14 @@ in
   # Autocompletion for systemd in zsh
   programs.zsh.enable = true;
   programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    zlib # numpy
+    libgcc  # sqlalchemy
+    # that's where the shared libs go, you can find which one you need using 
+    # nix-locate --top-level libstdc++.so.6  (replace this with your lib)
+    # ^ this requires `nix-index` pkg
+  ];
+
   environment.shells = with pkgs; [ zsh ];
   environment.pathsToLink = [ "/share/zsh" ];
   users.defaultUserShell = pkgs.zsh;
@@ -58,7 +72,10 @@ in
     pavucontrol
     clinfo
     unzip
+    devenv
 
+    #audio driver ?
+    ffado
   ];
 
   # Install firefox.
@@ -107,4 +124,21 @@ in
   services.picom = {
     enable = true;
   };
+
+  #AUDO setup need to make into module
+  services.jack = {
+    jackd.enable = true;
+    # support ALSA only programs via ALSA JACK PCM plugin
+    alsa.enable = false;
+    # support ALSA only programs via loopback device (supports programs like Steam)
+    loopback = {
+      enable = true;
+      # buffering parameters for dmix device to work with ALSA only semi-professional sound programs
+      #dmixConfig = ''
+      #  period_size 2048
+      #'';
+    };
+  };
+
+  users.extraUsers.mugen.extraGroups = [ "jackaudio" ];
 }

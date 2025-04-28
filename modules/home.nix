@@ -69,6 +69,9 @@ in
 
     # Indexing nix store
     nix-index
+
+    pandoc
+    texlive.combined.scheme-small
   ];
   home-manager.users.${user} = {
     # imports = [

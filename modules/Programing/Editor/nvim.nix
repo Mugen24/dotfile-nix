@@ -1,5 +1,11 @@
 {config, pkgs, user, ...}:
 {
+  environment.systemPackages = with pkgs; [
+      xsel
+      clip
+  ];
+
+  services.upower.enable = true;
   home-manager.users.${user} = {
     programs.neovim = {
       enable = true;
@@ -10,15 +16,17 @@
         set shiftwidth=4
         set expandtab
         set number
-        " set noautoindent
-        " set nosmartindent
-        " set nocindent
+
+        set noautoindent
+        set nosmartindent
+        set nocindent
+
         filetype indent off
-
-
       '';
       extraLuaConfig = '' 
         vim.g.mapleader = ' '
+        vim.o.clipboard = "unnamedplus"
+        vim.opt.smartindent = false
       '' + (builtins.readFile ./terminal_modules.lua);
       plugins = with pkgs.vimPlugins; [
         {
@@ -50,6 +58,9 @@
                  highlight = {
                    enable = true,
                    disable = {"help"}
+                 },
+                 indent = {
+                   enable = false
                  },
               })
             '';
@@ -154,8 +165,8 @@
             vim.keymap.set('n', 'gr', builtin.lsp_references, { desc = 'Telescope list references on cursor'})
 
             vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open error under cursor'})
-
             vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'Try to fix error with code'})
+            vim.keymap.set('n', '<leader>s', vim.lsp.buf.type_definition, { desc = 'Open signature to function'})
 
             -- Telescope File browser
 
@@ -375,10 +386,35 @@
           '';
         }
 
+        {
+          plugin = nvim-treesitter-parsers.latex;
+          type = "lua";
+          config = ''
+          '';
+        }
+
+        {
+          plugin = render-markdown-nvim;
+          type = "lua";
+          config = ''
+          require('render-markdown').setup({
+            completions = { lsp = { enabled = true } },
+          })
+          '';
+        }
+        
+
       ];
 
       
       extraPackages = [
+
+        pkgs.tree-sitter-grammars.tree-sitter-markdown
+        pkgs.tree-sitter-grammars.tree-sitter-markdown-inline
+        # pkgs.tree-sitter-grammars.tree-sitter-latex
+        pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+        pkgs.python313Packages.pylatexenc
+
         pkgs.gcc 
         pkgs.curl
         pkgs.git
@@ -389,6 +425,14 @@
         pkgs.fd
         pkgs.shellcheck
         pkgs.shfmt
+        pkgs.pyright
+        pkgs.nil
+        pkgs.ast-grep
+        pkgs.bash-language-server
+
+        #clipboard support
+        pkgs.xsel
+        pkgs.clip
       ];
     };
   };
