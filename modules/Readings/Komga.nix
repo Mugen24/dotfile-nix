@@ -13,13 +13,13 @@ in
             pkgs.suwayomi-server
         ];
 
-        services.komga = {
-            enable = true;
-            user = user;
-            stateDir = "/var/lib/komga";
-            port = 9111;
-            openFirewall = true;
-        };
+        # services.komga = {
+        #     enable = true;
+        #     user = user;
+        #     stateDir = "/var/lib/komga";
+        #     port = 9111;
+        #     openFirewall = true;
+        # };
 
         services.flaresolverr = {
             enable = true;

@@ -1,9 +1,10 @@
-{ username, pkgs, ... }: 
+{ user, pkgs, ... }: 
 let 
     #TODO: make this configurable
     downloadPath = "/media/Linux_storage/Media/Readings/Books/";
     #source: https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json
     # https://github.com/keiyoushi/extensions
+    host = "192.168.0.36";
 in
     {
         environment.systemPackages = [
@@ -12,15 +13,27 @@ in
             pkgs.audiobookshelf
         ];
         # TODO: make this a passed variable
-        services.audiobookshelf = {
+        # services.audiobookshelf = {
+        #     enable = true;
+        #     port = 8113;
+        #     openFirewall = true;
+        #     host = "192.168.0.36";
+        # };
+
+        services.kavita = {
             enable = true;
-            port = 8113;
-            openFirewall = true;
+            settings.Port = 8114;
+            settings.IpAddresses = host;
+            tokenKeyFile = "/home/${user}/.local/state/test/kavita.s";
+            package = (import ./kavita.nix);
         };
 
         services.calibre-server = {
             enable = true;
             port = 8112;
             openFirewall = true;
+        };
+        networking.firewall = {
+            allowedTCPPorts = [ 8113 8112 8114 ];
         };
     }
