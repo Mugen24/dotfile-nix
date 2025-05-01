@@ -24,6 +24,11 @@ in
       ];
 
       programs.gamemode.enable = true;
+      programs.gamescope = {
+         enable = true;
+         capSysNice = true;
+      };
+
       programs.steam = {
         enable = true;
         remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
@@ -37,15 +42,15 @@ in
             # e.g. some games require python3
           ]);
         };
+        gamescopeSession.enable = true;
 
         extraPackages = with pkgs; [
-          gamescope
+          # gamescope
           mangohud
           gamemode
         ];
       };  
 
-      programs.steam.gamescopeSession.enable = true;
 
       xdg.portal.enable = true;
       xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
