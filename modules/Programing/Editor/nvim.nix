@@ -17,9 +17,9 @@
         set expandtab
         set number
 
-        set noautoindent
-        set nosmartindent
-        set nocindent
+        " set noautoindent
+        " set nosmartindent
+        " set nocindent
 
         filetype indent off
       '';

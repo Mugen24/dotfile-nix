@@ -2,6 +2,7 @@
 with lib;
 let 
   cfg = config.gaming;
+  new_gamescope = pkgs.callPackage ./gamescope.nix {};
 in
   {
     options = {
@@ -21,6 +22,7 @@ in
         #gamevault
         #gammeyfin
         #Gaseous Server
+        # (pkgs.callPackage ./gamescope.nix)
       ];
 
       programs.gamemode.enable = true;

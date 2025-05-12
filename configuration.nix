@@ -16,17 +16,39 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = ["amdgpu"];
+  boot.initrd.kernelModules = [ 
+    "amdgpu" 
+  ];
   boot.kernelParams = [
   ];
 
   boot = {
-    extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback ];
-    kernelModules = [ "v4l2loopback" ];
+    extraModulePackages = with config.boot.kernelPackages; [ 
+      v4l2loopback 
+      # firewire-core
+      # firewire-ohci
+    ];
+    kernelModules = [ 
+      "v4l2loopback" 
+      "firewire-core"
+      "firewire-ohci"
+      # "snd-firewire-motu"
+    ];
+
     extraModprobeConfig = ''
         # example settings
 	# options yourmodulename optionA=valueA optionB=valueB # syntax
 	options v4l2loopback video_nr=9 card_label=Video-Loopback exclusive_caps=1
+        #blacklist snd-fireworks
+        #blacklist snd-bebob
+        #blacklist snd-oxfw
+        #blacklist snd-dice
+        #blacklist snd-firewire-digi00x
+        #blacklist snd-firewire-tascam
+        #blacklist snd-firewire-lib
+        #blacklist snd-firewire-transceiver
+        #blacklist snd-fireface
+        #blacklist snd-firewire-motu
     '';
   };
 
@@ -117,19 +139,54 @@
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
+    # alsa.enable = true;
+    # alsa.support32Bit = true;
     pulse.enable = true;
     audio.enable = true;
     # If you want to use JACK applications, uncomment this
-    # jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     wireplumber = {
       enable = true;
     };
+    # package = pkgs.pipewire.override {
+    #   # ffadoSupport = true;
+    #   # ffado = pkgs.ffado;
+    # };
+
+    # extraConfig.pipewire."10-ffado" = {
+    #   "context.modules" = [
+    #     {   
+    #       "name" = "libpipewire-module-ffado-driver";
+    #       "args" = {
+    #         "driver.mode"       = "duplex";
+    #         "ffado.devices"     = [ "hw:0" "hw:2" "hw:3" ];
+    #         "ffado.period-size" = 1024;
+    #         "ffado.period-num"  = 3;
+    #         "ffado.sample-rate" = 48000;
+    #         "ffado.slave-mode"  = false;
+    #         "ffado.snoop-mode"  = false;
+    #         "ffado.verbose"     = 0;
+    #         "ffado.rtprio"      = 65;
+    #         "ffado.realtime"    = true;
+    #         "latency.internal.input"  = 0;
+    #         "latency.internal.output" = 0;
+    #         "audio.position"    = [ "FL" "FR" ];
+    #         "source.props" = {
+    #     	# extra sink properties
+    #         };
+    #         "sink.props" = {
+    #     	# extra sink properties
+    #         };
+    #       };
+    #     }
+    #   ];
+    # };
+
   };
+
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -154,7 +211,9 @@
   systemd.services."autovt@tty1".enable = false;
 
   # Install firefox.
-  programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -183,6 +242,11 @@
     ntfs3g
     # pavucontrol
     pwvucontrol
+    alsa-utils
+    # ffado
+    # ffado-mixer
+    # dolphin
+    kdePackages.dolphin
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -285,7 +285,7 @@ import re
 # from game import game_group, group_name
 group_name = "Gaming"
 
-game_matches=[
+game_matches = [
     Match(wm_class=re.compile("steam", re.IGNORECASE))
 ]
 game_group = Group(name=group_name, screen_affinity=1, matches=game_matches, persist=False)

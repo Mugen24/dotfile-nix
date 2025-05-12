@@ -10,7 +10,7 @@ in
         environment.systemPackages = [
             # TODO: fix hakuneko --no-sandbox to run
             # pkgs.calibre
-            pkgs.audiobookshelf
+            # pkgs.audiobookshelf
         ];
         # TODO: make this a passed variable
         # services.audiobookshelf = {
@@ -21,18 +21,18 @@ in
         # };
 
         services.kavita = {
-            enable = true;
-            settings.Port = 8114;
-            settings.IpAddresses = host;
-            tokenKeyFile = "/home/${user}/.local/state/test/kavita.s";
-            package = (import ./kavita.nix);
+             enable = true;
+             settings.Port = 8114;
+             settings.IpAddresses = host;
+             tokenKeyFile = "/home/${user}/.local/state/test/kavita.s";
+             package = pkgs.kavita;
         };
 
-        services.calibre-server = {
-            enable = true;
-            port = 8112;
-            openFirewall = true;
-        };
+        # services.calibre-server = {
+        #     enable = true;
+        #     port = 8112;
+        #     openFirewall = true;
+        # };
         networking.firewall = {
             allowedTCPPorts = [ 8113 8112 8114 ];
         };
