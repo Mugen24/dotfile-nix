@@ -29,7 +29,7 @@ in default.nix
 
 from sys import exception
 from libqtile import bar, layout, qtile, widget
-from libqtile.config import Click, Drag, Group, Key, Match, Screen
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.log_utils import logger
@@ -139,10 +139,15 @@ groups.extend([Group(i, screen_affinity = 1, label="") for i in "67890"])
 def switch_callback(qtile, group_name):
     # logger.warning("testing")
     # logger.warning(group_instance.screen)
+    try:
+        group_instance = qtile.groups_map[group_name]
+        qtile.to_screen(group_instance.screen_affinity)
+        qtile.screens[group_instance.screen_affinity].toggle_group(group_name)
+    except Exception as e:
+        print(e)
+        logger.warn(qtile.get_groups())
+        logger.warn(qtile.group_name)
 
-    group_instance = qtile.groups_map[group_name]
-    qtile.to_screen(group_instance.screen_affinity)
-    qtile.screens[group_instance.screen_affinity].toggle_group(group_name)
 
 
 # lazy.group[i.name].toscreen(),
@@ -285,10 +290,40 @@ import re
 # from game import game_group, group_name
 group_name = "Gaming"
 
-game_matches = [
-    Match(wm_class=re.compile("steam", re.IGNORECASE))
+# Make steam a float window
+steam_match: Match = Match(title="Steam")
+game_match: Match = Match(wm_class=re.compile("steam_app_.*", re.IGNORECASE))
+
+# floating_layout.float_rules.append(steam_match)
+
+# Bind steam to dropdown
+scratchPad = ScratchPad("scratchpad", [
+    DropDown("steam", "steam", match=steam_match, on_focus_lost_hide=True, height=0.9, opacity=1),
+    # define a drop down terminal.
+    # it is placed in the upper third of screen by default.
+    # DropDown("term", "urxvt", opacity=0.8),
+
+    # define another terminal exclusively for ``qtile shell` at different position
+    # DropDown("qtile shell", "urxvt -hold -e 'qtile shell'",
+    #          x=0.05, y=0.4, width=0.9, height=0.6, opacity=0.9,
+    #          on_focus_lost_hide=True) 
+    ]
+)
+groups.append(scratchPad)
+
+scratchPad_keys = [
+  # toggle visibiliy of above defined DropDown named "term"
+  Key([mod], "s", lazy.group['scratchpad'].dropdown_toggle('steam')),
 ]
-game_group = Group(name=group_name, screen_affinity=1, matches=game_matches, persist=False)
+keys.extend(scratchPad_keys)
+
+# game_matches = [
+#     Match(wm_class=re.compile("steam", re.IGNORECASE))
+# ]
+
+
+
+game_group = Group(name=group_name, screen_affinity=1, matches=game_match, persist=True)
 game_key = Key([mod], "g",
             switch_callback(group_name),
             desc="Switch gaming group")

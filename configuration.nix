@@ -48,7 +48,7 @@
         #blacklist snd-firewire-lib
         #blacklist snd-firewire-transceiver
         #blacklist snd-fireface
-        #blacklist snd-firewire-motu
+        blacklist snd-firewire-motu
     '';
   };
 
@@ -156,36 +156,48 @@
     #   # ffado = pkgs.ffado;
     # };
 
-    # extraConfig.pipewire."10-ffado" = {
-    #   "context.modules" = [
-    #     {   
-    #       "name" = "libpipewire-module-ffado-driver";
-    #       "args" = {
-    #         "driver.mode"       = "duplex";
-    #         "ffado.devices"     = [ "hw:0" "hw:2" "hw:3" ];
-    #         "ffado.period-size" = 1024;
-    #         "ffado.period-num"  = 3;
-    #         "ffado.sample-rate" = 48000;
-    #         "ffado.slave-mode"  = false;
-    #         "ffado.snoop-mode"  = false;
-    #         "ffado.verbose"     = 0;
-    #         "ffado.rtprio"      = 65;
-    #         "ffado.realtime"    = true;
-    #         "latency.internal.input"  = 0;
-    #         "latency.internal.output" = 0;
-    #         "audio.position"    = [ "FL" "FR" ];
-    #         "source.props" = {
-    #     	# extra sink properties
-    #         };
-    #         "sink.props" = {
-    #     	# extra sink properties
-    #         };
-    #       };
-    #     }
-    #   ];
-    # };
+    extraConfig.pipewire."10-ffado" = {
+      "context.modules" = [
+        {   
+          "name" = "libpipewire-module-ffado-driver";
+          "args" = {
+            "driver.mode"       = "duplex";
+            "ffado.devices"     = [ "hw:0" ];
+            "ffado.period-size" = 1024;
+            "ffado.period-num"  = 3;
+            "ffado.sample-rate" = 48000;
+            "ffado.slave-mode"  = false;
+            "ffado.snoop-mode"  = false;
+            "ffado.verbose"     = 0;
+            "ffado.rtprio"      = 65;
+            "ffado.realtime"    = true;
+            "latency.internal.input"  = 0;
+            "latency.internal.output" = 0;
+            "audio.position"    = [ "FL" "FR" ];
+            "source.props" = {
+        	# extra sink properties
+            };
+            "sink.props" = {
+        	# extra sink properties
+            };
+          };
+        }
+      ];
+    };
 
   };
+
+  security.pam.loginLimits = [
+      { domain = "@audio"; item = "memlock"; type = "-"   ; value = "unlimited"; }
+      { domain = "@audio"; item = "rtprio" ; type = "-"   ; value = "99"       ; }
+      { domain = "@audio"; item = "nofile" ; type = "soft"; value = "99999"    ; }
+      { domain = "@audio"; item = "nofile" ; type = "hard"; value = "99999"    ; }
+    ];
+
+  services.udev.extraRules = ''
+      KERNEL=="rtc0", GROUP="audio"
+      KERNEL=="hpet", GROUP="audio"
+  '';
 
 
   # Enable touchpad support (enabled default in most desktopManager).
@@ -195,7 +207,7 @@
   users.users.mugen = {
     isNormalUser = true;
     description = "Mugen";
-    extraGroups = [ "networkmanager" "wheel" "docker"];
+    extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
     packages = with pkgs; [
     #  thunderbird
     ];
