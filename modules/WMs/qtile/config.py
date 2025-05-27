@@ -295,10 +295,12 @@ steam_match: Match = Match(title="Steam")
 game_match: Match = Match(wm_class=re.compile("steam_app_.*", re.IGNORECASE))
 
 # floating_layout.float_rules.append(steam_match)
+discord_match = Match(wm_class=re.compile("(vesktop)|(discord)", re.IGNORECASE))
 
 # Bind steam to dropdown
 scratchPad = ScratchPad("scratchpad", [
-    DropDown("steam", "steam", match=steam_match, on_focus_lost_hide=True, height=0.9, opacity=1),
+    DropDown("steam", "steam", match=steam_match, on_focus_lost_hide=True, height=0.8, x=0.1, y=0.1, opacity=1),
+    DropDown("discord", "flatpak run dev.vencord.Vesktop", match=discord_match, on_focus_lost_hide=True, height=0.8, x=0.1, y=0.1, opacity=1),
     # define a drop down terminal.
     # it is placed in the upper third of screen by default.
     # DropDown("term", "urxvt", opacity=0.8),
@@ -314,6 +316,7 @@ groups.append(scratchPad)
 scratchPad_keys = [
   # toggle visibiliy of above defined DropDown named "term"
   Key([mod], "s", lazy.group['scratchpad'].dropdown_toggle('steam')),
+  Key([mod], "e", lazy.group['scratchpad'].dropdown_toggle('discord')),
 ]
 keys.extend(scratchPad_keys)
 

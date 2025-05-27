@@ -25,30 +25,29 @@
   boot = {
     extraModulePackages = with config.boot.kernelPackages; [ 
       v4l2loopback 
-      # firewire-core
-      # firewire-ohci
     ];
+
     kernelModules = [ 
       "v4l2loopback" 
       "firewire-core"
       "firewire-ohci"
-      # "snd-firewire-motu"
+      "snd-firewire-motu"
     ];
 
     extraModprobeConfig = ''
         # example settings
 	# options yourmodulename optionA=valueA optionB=valueB # syntax
 	options v4l2loopback video_nr=9 card_label=Video-Loopback exclusive_caps=1
-        #blacklist snd-fireworks
-        #blacklist snd-bebob
-        #blacklist snd-oxfw
-        #blacklist snd-dice
-        #blacklist snd-firewire-digi00x
-        #blacklist snd-firewire-tascam
-        #blacklist snd-firewire-lib
-        #blacklist snd-firewire-transceiver
-        #blacklist snd-fireface
-        blacklist snd-firewire-motu
+        # blacklist snd-fireworks
+        # blacklist snd-bebob
+        # blacklist snd-oxfw
+        # blacklist snd-dice
+        # blacklist snd-firewire-digi00x
+        # blacklist snd-firewire-tascam
+        # blacklist snd-firewire-lib
+        # blacklist snd-firewire-transceiver
+        # blacklist snd-fireface
+        # blacklist snd-firewire-motu
     '';
   };
 
@@ -139,8 +138,10 @@
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
+
     # alsa.enable = true;
     # alsa.support32Bit = true;
+
     pulse.enable = true;
     audio.enable = true;
     # If you want to use JACK applications, uncomment this
@@ -156,34 +157,34 @@
     #   # ffado = pkgs.ffado;
     # };
 
-    extraConfig.pipewire."10-ffado" = {
-      "context.modules" = [
-        {   
-          "name" = "libpipewire-module-ffado-driver";
-          "args" = {
-            "driver.mode"       = "duplex";
-            "ffado.devices"     = [ "hw:0" ];
-            "ffado.period-size" = 1024;
-            "ffado.period-num"  = 3;
-            "ffado.sample-rate" = 48000;
-            "ffado.slave-mode"  = false;
-            "ffado.snoop-mode"  = false;
-            "ffado.verbose"     = 0;
-            "ffado.rtprio"      = 65;
-            "ffado.realtime"    = true;
-            "latency.internal.input"  = 0;
-            "latency.internal.output" = 0;
-            "audio.position"    = [ "FL" "FR" ];
-            "source.props" = {
-        	# extra sink properties
-            };
-            "sink.props" = {
-        	# extra sink properties
-            };
-          };
-        }
-      ];
-    };
+    # extraConfig.pipewire."10-ffado" = {
+    #   "context.modules" = [
+    #     {   
+    #       "name" = "libpipewire-module-ffado-driver";
+    #       "args" = {
+    #         "driver.mode"       = "duplex";
+    #         "ffado.devices"     = [ "hw:0" ];
+    #         "ffado.period-size" = 1024;
+    #         "ffado.period-num"  = 3;
+    #         "ffado.sample-rate" = 48000;
+    #         "ffado.slave-mode"  = false;
+    #         "ffado.snoop-mode"  = false;
+    #         "ffado.verbose"     = 0;
+    #         "ffado.rtprio"      = 65;
+    #         "ffado.realtime"    = true;
+    #         "latency.internal.input"  = 0;
+    #         "latency.internal.output" = 0;
+    #         "audio.position"    = [ "FL" "FR" ];
+    #         "source.props" = {
+    #     	# extra sink properties
+    #         };
+    #         "sink.props" = {
+    #     	# extra sink properties
+    #         };
+    #       };
+    #     }
+    #   ];
+    # };
 
   };
 
@@ -197,6 +198,7 @@
   services.udev.extraRules = ''
       KERNEL=="rtc0", GROUP="audio"
       KERNEL=="hpet", GROUP="audio"
+      KERNEL=="fw*", GROUP="audio", MODE="0664"
   '';
 
 
@@ -207,9 +209,10 @@
   users.users.mugen = {
     isNormalUser = true;
     description = "Mugen";
-    extraGroups = [ "networkmanager" "wheel" "docker" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "audio" "root" ];
     packages = with pkgs; [
     #  thunderbird
+    qjackctl
     ];
   };
 
@@ -255,10 +258,13 @@
     # pavucontrol
     pwvucontrol
     alsa-utils
-    # ffado
-    # ffado-mixer
-    # dolphin
+    # (ffado.override {
+    #   withMixer=true;
+    # })
     kdePackages.dolphin
+    pciutils
+    busybox
+    cura-appimage
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

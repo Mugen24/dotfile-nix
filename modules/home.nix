@@ -28,7 +28,7 @@ in
     #   withOpenASAR = true; 
     #   withVencord = true;
     # })
-    vesktop
+    # vesktop
 
     btop
     onlyoffice-bin

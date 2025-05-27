@@ -75,7 +75,7 @@ in
     devenv
 
     #audio driver ?
-    ffado
+    # ffado
   ];
 
   # Install firefox.

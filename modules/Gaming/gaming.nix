@@ -23,6 +23,7 @@ in
         #gammeyfin
         #Gaseous Server
         # (pkgs.callPackage ./gamescope.nix)
+        bottles
       ];
 
       programs.gamemode.enable = true;
