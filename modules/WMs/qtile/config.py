@@ -252,6 +252,7 @@ follow_mouse_focus = True
 bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
+
 floating_layout = layout.Floating(
     float_rules=[
         # Run the utility of `xprop` to see the wm class and name of an X client.
@@ -262,6 +263,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(title="Steam"),
     ]
 )
 auto_fullscreen = True
@@ -335,10 +337,14 @@ groups.append(game_group)
 keys.append(game_key)
 
 # Prevent gaming window from taking focus
-@hook.subscribe.client_new
-def prevent_focus_stealing(window):
+@hook.subscribe.group_window_add
+def prevent_focus_stealing(group, window):
     logger.warning("new_client")
+    logger.warning(window.info())
     logger.warning(f"window: {game_match.compare(window)}")
     if game_match.compare(window):
         window.disable_fullscreen()
+        # if not qtile.current_window:
+        #     return
+        # else:
         window.can_steal_focus = False

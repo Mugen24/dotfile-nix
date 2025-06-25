@@ -5,7 +5,7 @@
     home.packages = with pkgs; [
       tigervnc
       teams-for-linux    
-      docker_27
+      docker_28
       docker-compose
       dash
 

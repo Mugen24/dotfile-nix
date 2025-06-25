@@ -44,7 +44,7 @@ in
 				# }
 			];
 
-			initExtra = ''
+			initContent = ''
 				ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
 				#CALIBRE_DEVELOP_FROM=/home/mugen/App/calibre/src
 				#CALIBRE_RESOURCES_PATH=/home/mugen/App/calibre/src
