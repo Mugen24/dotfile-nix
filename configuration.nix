@@ -209,7 +209,7 @@
   users.users.mugen = {
     isNormalUser = true;
     description = "Mugen";
-    extraGroups = [ "networkmanager" "wheel" "docker" "audio" "root" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "audio" "root" "users" ];
     packages = with pkgs; [
     #  thunderbird
     qjackctl
@@ -265,6 +265,10 @@
     pciutils
     busybox
     cura-appimage
+
+    # notification manager
+    dunst
+    libnotify
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

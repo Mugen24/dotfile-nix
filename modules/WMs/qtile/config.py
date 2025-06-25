@@ -28,7 +28,7 @@ in default.nix
 """
 
 from sys import exception
-from libqtile import bar, layout, qtile, widget
+from libqtile import bar, layout, qtile, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
@@ -333,3 +333,12 @@ game_key = Key([mod], "g",
 
 groups.append(game_group)
 keys.append(game_key)
+
+# Prevent gaming window from taking focus
+@hook.subscribe.client_new
+def prevent_focus_stealing(window):
+    logger.warning("new_client")
+    logger.warning(f"window: {game_match.compare(window)}")
+    if game_match.compare(window):
+        window.disable_fullscreen()
+        window.can_steal_focus = False

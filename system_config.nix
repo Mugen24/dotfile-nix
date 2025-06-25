@@ -73,7 +73,7 @@ in
     clinfo
     unzip
     devenv
-
+    android-tools
     #audio driver ?
     # ffado
   ];
@@ -141,4 +141,16 @@ in
   # };
 
   users.extraUsers.mugen.extraGroups = [ "jackaudio" ];
+  hardware.logitech= {
+    wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
+  };
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
+
+
 }

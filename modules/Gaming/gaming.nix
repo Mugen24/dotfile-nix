@@ -23,7 +23,11 @@ in
         #gammeyfin
         #Gaseous Server
         # (pkgs.callPackage ./gamescope.nix)
-        bottles
+        # bottles
+        # lutris
+
+        # wine
+        # winetricks
       ];
 
       programs.gamemode.enable = true;
@@ -43,7 +47,18 @@ in
             gamemode
             # additional packages...
             # e.g. some games require python3
+            xorg.libXcursor
+            xorg.libXi
+            xorg.libXinerama
+            xorg.libXScrnSaver
+            libpng
+            libpulseaudio
+            libvorbis
+            stdenv.cc.cc.lib
+            libkrb5
+            keyutils
           ]);
+          extraLibraries = pkgs: [ pkgs.xorg.libxcb ];
         };
         gamescopeSession.enable = true;
 
@@ -52,6 +67,7 @@ in
           mangohud
           gamemode
         ];
+
       };  
 
 
