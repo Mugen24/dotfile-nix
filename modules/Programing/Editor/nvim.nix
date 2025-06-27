@@ -217,49 +217,6 @@
             })
             -- Fetch default config
             -- local configs = require("lspconfig.configs")
-
-
-            require("mason-lspconfig").setup_handlers({
-                -- The first entry (without a key) will be the default handler
-                -- and will be called for each installed server that doesn't have
-                -- a dedicated handler.
-                function (server_name) -- default handler (optional)
-                    if server_name == "pyright" then
-                      require("lspconfig")["pyright"].setup({
-                        settings = {
-                           python = {
-                              analysis = {
-                                autoSearchPaths = true,
-                                diagnosticMode = "openFilesOnly",
-                                useLibraryCodeForTypes = true,
-                                autoImportCompletions = true,
-                                typeCheckingMode = "strict",
-                              }
-                           }
-                        }
-                      })
-                    elseif server_name == "shellcheck" then
-                      require("lspconfig")["shellcheck"].setup({
-                        settings = {
-                           python = {
-                              analysis = {
-                                autoSearchPaths = true,
-                                diagnosticMode = "openFilesOnly",
-                                useLibraryCodeForTypes = true,
-                                autoImportCompletions = true,
-                                typeCheckingMode = "strict",
-                              }
-                           }
-                        }
-                      })
-
-                    else 
-                      require("lspconfig")[server_name].setup {}
-                    end
-
-
-                end
-            })
           '';
         }
 
