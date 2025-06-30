@@ -62,70 +62,81 @@
     ];
 };
 	
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  # Autocompletion for systemd in zsh
-  programs.zsh.enable = true;
-  # Adhoc execution of binaries;
-  programs.nix-ld.enable = true;
+nix.settings.experimental-features = [ "nix-command" "flakes" ];
+# Autocompletion for systemd in zsh
+programs.zsh.enable = true;
+# Adhoc execution of binaries;
+programs.nix-ld.enable = true;
 
-  environment.shells = with pkgs; [ zsh ];
-  environment.pathsToLink = [ "/share/zsh" ];
-  users.defaultUserShell = pkgs.zsh;
-
- 
+environment.shells = with pkgs; [ zsh ];
+environment.pathsToLink = [ "/share/zsh" ];
+users.defaultUserShell = pkgs.zsh;
 
 
-  networking.hostName = "nixos"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+networking.hostName = "nixos"; # Define your hostname.
+# networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Set your time zone.
-  time.timeZone = "Australia/Sydney";
+# Configure network proxy if necessary
+# networking.proxy.default = "http://user:password@proxy:port/";
+# networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_GB.UTF-8";
+# Enable networking
+networking.networkmanager.enable = true;
 
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_AU.UTF-8";
-    LC_IDENTIFICATION = "en_AU.UTF-8";
-    LC_MEASUREMENT = "en_AU.UTF-8";
-    LC_MONETARY = "en_AU.UTF-8";
-    LC_NAME = "en_AU.UTF-8";
-    LC_NUMERIC = "en_AU.UTF-8";
-    LC_PAPER = "en_AU.UTF-8";
-    LC_TELEPHONE = "en_AU.UTF-8";
-    LC_TIME = "en_AU.UTF-8";
+# Set your time zone.
+time.timeZone = "Australia/Sydney";
+
+# Select internationalisation properties.
+i18n.defaultLocale = "en_GB.UTF-8";
+
+i18n.extraLocaleSettings = {
+  LC_ADDRESS = "en_AU.UTF-8";
+  LC_IDENTIFICATION = "en_AU.UTF-8";
+  LC_MEASUREMENT = "en_AU.UTF-8";
+  LC_MONETARY = "en_AU.UTF-8";
+  LC_NAME = "en_AU.UTF-8";
+  LC_NUMERIC = "en_AU.UTF-8";
+  LC_PAPER = "en_AU.UTF-8";
+  LC_TELEPHONE = "en_AU.UTF-8";
+  LC_TIME = "en_AU.UTF-8";
+};
+
+# Enable the X11 windowing system.
+services.displayManager = {
+  enable = true;
+};
+
+# Enable the GNOME Desktop Environment.
+services.displayManager.gdm.enable = true;
+# services.xserver.desktopManager.gnome.enable = true;
+# services.xserver.windowManager.qtile.enable = true;
+
+# services.xserver.windowManager.qtile.backend = "wayland";
+
+# Configure keymap in X11
+services.xserver = {
+  enable = true;  
+  videoDrivers = ["amdgpu"];
+  xkb = {
+   layout = "au";
   };
+  extraConfig = ''
+  # https://wiki.archlinux.org/title/Display_Power_Management_Signaling
+  # Disable monitor power saving
+  Section "Extensions"
+    Option "DPMS" "false"
+  EndSection
 
-  # Enable the X11 windowing system.
-  services.displayManager = {
-    enable = true;
-  };
+  Section "ServerFlags"
+    Option "BlankTime" "0"
+  EndSection
+  '';
+};
 
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
-  # services.xserver.windowManager.qtile.enable = true;
-
-  # services.xserver.windowManager.qtile.backend = "wayland";
-
-  # Configure keymap in X11
- services.xserver = {
-   enable = true;  
-   videoDrivers = ["amdgpu"];
-   xkb = {
-     layout = "au";
-   };
- };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+# Enable CUPS to print documents.
+services.printing.enable = true;
 
   #https://www.reddit.com/r/NixOS/comments/185f0x4/how_to_mount_a_usb_drive/
   # Enable auto-mouning usbdrives

@@ -9,5 +9,6 @@
     ./python.nix
     ./uni.nix
     ./web_development
+    # ./qutebrowser
   ];
 }

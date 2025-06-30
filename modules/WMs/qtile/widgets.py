@@ -6,8 +6,8 @@ from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from constants import *
 from qtile_extras import widget
 from libqtile import bar
-from qtile_extras.widget import decorations
 from qtile_extras.widget.decorations import RectDecoration
+from libqtile import hook, qtile
 
 SCHEMA = SCHEMA if SCHEMA is not None else {}
 DEFAULT = {
@@ -159,32 +159,32 @@ def main_widget():
 
 
 def secondary_widget():
+
     return [
         widget.Spacer(),
         group(),
+        widget.Spacer(),
 
-        widget.Spacer(
-        ),
+            # net(**rounded_border(secondaryLight, left_round), padding=10),
+            # memory(**rounded_border(secondaryLight, [0,0,0,0]), padding=10),
+            # cpu(**rounded_border(secondaryLight, right_round), padding=10),
 
-        net(**rounded_border(secondaryLight, left_round), padding=10),
-        memory(**rounded_border(secondaryLight, [0,0,0,0]), padding=10),
-        cpu(**rounded_border(secondaryLight, right_round), padding=10),
-
-        widget.Spacer(
-            length=10
-        ),
-        
-        bluetooth(**rounded_border(primaryLight, left_round), padding=10),
-        widget.Spacer(
-            length=2,
-            background=primaryLight,
-        ),
-        widget.Sep(text="|", background=primaryLight, foreground=neutral),
-        widget.Spacer(
-            length=6,
-            background=primaryLight
-        ),
-        pulse_volume(**rounded_border(primaryLight, right_round,), adding=10),
+            # widget.Spacer(
+            #     length=10
+            # ),
+            # 
+            # bluetooth(**rounded_border(primaryLight, left_round), padding=10),
+            # widget.Spacer(
+            #     length=2,
+            #     background=primaryLight,
+            # ),
+            # widget.Sep(text="|", background=primaryLight, foreground=neutral),
+            # widget.Spacer(
+            #     length=6,
+            #     background=primaryLight
+            # ),
+            # pulse_volume(**rounded_border(primaryLight, right_round,), adding=10),
+            # pulse_volume(**rounded_border(primaryLight), adding=10),
 
         widget.Spacer(
             length=10
@@ -193,7 +193,6 @@ def secondary_widget():
         clock(**rounded_border(neutral)),
     ]
 
-from libqtile import hook, qtile
 @hook.subscribe.setgroup
 def setgroup():
     for i in range(0, len(qtile.groups)):

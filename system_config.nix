@@ -74,8 +74,7 @@ in
     unzip
     devenv
     android-tools
-    #audio driver ?
-    # ffado
+    anki-bin
   ];
 
   # Install firefox.
@@ -151,6 +150,11 @@ in
     enable = true;
     binfmt = true;
   };
+
+  security.pam.loginLimits = [
+    { domain = "*"; item = "nofile"; type = "-"; value = "524288"; }
+    { domain = "*"; item = "memlock"; type = "-"; value = "524288"; }
+  ];
 
 
 }

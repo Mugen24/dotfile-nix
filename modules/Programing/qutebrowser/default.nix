@@ -1,18 +1,9 @@
 {config, pkgs, user, ...}:
 {
-  imports = {
-  };
+  environment.systemPackages = with pkgs; [
+    qutebrowser
+  ];
 
-  options = {
-    
-  };
-
-  config = {
-    environment.systemPackages = with pkgs; [
-      qutebrowser
-    ];
-
-  };
 }
 
 
