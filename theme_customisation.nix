@@ -31,12 +31,17 @@ in
     };
 
     fonts.packages = with pkgs; [
-      emacsPackages.all-the-icons-nerd-fonts
-      # nerd-fonts.symbols-only
-      # nerd-fonts.jetbrains-mono
-      # nerd-fonts.code-new-roman
-      # nerd-fonts.sauce-code-pro
-      
+      # emacsPackages.all-the-icons-nerd-fonts
+      nerd-fonts.symbols-only
+      nerd-fonts.jetbrains-mono
+      nerd-fonts.code-new-roman
+      nerd-fonts.sauce-code-pro
+      nerd-fonts.fira-code
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.noto
+      nerd-fonts.hack
+      nerd-fonts.ubuntu
+    
       # (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
       # nerdfonts
     ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
