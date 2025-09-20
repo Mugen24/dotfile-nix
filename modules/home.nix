@@ -19,7 +19,7 @@ in
     gparted
     kdePackages.okular
     pdfarranger
-    libsForQt5.dolphin
+    # libsForQt5.dolphin
     nemo
     nemo-fileroller
     # (discord.override {

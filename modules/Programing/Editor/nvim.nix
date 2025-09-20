@@ -2,7 +2,7 @@
 {
   environment.systemPackages = with pkgs; [
       xsel
-      clip
+      # clip
   ];
 
   services.upower.enable = true;
@@ -397,7 +397,7 @@
 
         #clipboard support
         pkgs.xsel
-        pkgs.clip
+        # pkgs.clip
       ];
     };
   };

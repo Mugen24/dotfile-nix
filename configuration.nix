@@ -8,7 +8,7 @@
       ./hardware-configuration.nix
       ./system_config.nix
     ];
-  
+  download-buffer-size = 500000000; # 500 MB  
   qtile_mod = {
     enable = true;
   };
