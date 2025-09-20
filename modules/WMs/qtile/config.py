@@ -27,9 +27,10 @@ REMINDER: all extra file import must also be declared to be moved over
 in default.nix
 """
 
+import re
 from sys import exception
 from libqtile import bar, layout, qtile, widget, hook
-from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown
+from libqtile.config import Click, Drag, Group, Key, Match, Screen, ScratchPad, DropDown, Rule
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from libqtile.log_utils import logger
@@ -112,9 +113,8 @@ keys = [
         desc="Toggle fullscreen on the focused window",
     ),
     Key([mod], "t", lazy.window.toggle_floating(), desc="Toggle floating on the focused window"),
-    Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([], "Prior", lazy.spawn("systemctl suspend"), desc="Shutdown Qtile"),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -287,7 +287,6 @@ wl_input_rules = None
 wmname = "LG3D"
 
 #### Game only group
-import re
 # from game import game_group, group_name
 group_name = "Gaming"
 
@@ -301,7 +300,7 @@ discord_match = Match(wm_class=re.compile("(vesktop)|(discord)", re.IGNORECASE))
 # Bind steam to dropdown
 scratchPad = ScratchPad("scratchpad", [
     DropDown("steam", "steam", match=steam_match, on_focus_lost_hide=True, height=0.8, x=0.1, y=0.1, opacity=1),
-    DropDown("discord", "flatpak run dev.vencord.Vesktop", match=discord_match, on_focus_lost_hide=True, height=0.8, x=0.1, y=0.1, opacity=1),
+    DropDown("discord", "vesktop || flatpak run dev.vencord.Vesktop", match=discord_match, on_focus_lost_hide=True, height=0.8, x=0.1, y=0.1, opacity=1),
     # define a drop down terminal.
     # it is placed in the upper third of screen by default.
     # DropDown("term", "urxvt", opacity=0.8),
@@ -347,3 +346,7 @@ def prevent_focus_stealing(group, window):
         # else:
         window.can_steal_focus = False
 
+
+# Pin picture in picture
+pip = Match(title="Picture-in-Picture", )
+    

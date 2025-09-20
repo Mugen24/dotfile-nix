@@ -27,6 +27,7 @@
         vim.g.mapleader = ' '
         vim.o.clipboard = "unnamedplus"
         vim.opt.smartindent = false
+        vim.keymap.set('i', 'jj', '<Esc>')
       '' + (builtins.readFile ./terminal_modules.lua);
       plugins = with pkgs.vimPlugins; [
         {
@@ -357,6 +358,13 @@
           require('render-markdown').setup({
             completions = { lsp = { enabled = true } },
           })
+          '';
+        }
+
+        {
+          plugin = nvim-dap-ui;
+          type = "lua";
+          config = ''
           '';
         }
         

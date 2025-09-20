@@ -2,13 +2,14 @@
 with lib;
 let 
   cfg = config.gaming;
-  new_gamescope = pkgs.callPackage ./gamescope.nix {};
 in
   {
     options = {
       gaming = {
         enable = mkEnableOption "Enable module";
+        yuzu = mkEnableOption "Enable yuzu";
       };
+
     };
 
     config = mkIf cfg.enable {
@@ -87,5 +88,7 @@ in
       # https://nixos.org/manual/nixos/stable/index.html#module-services-flatpak
       # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
       # flatpak update
+
+
     };
   }
