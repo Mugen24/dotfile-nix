@@ -113,6 +113,25 @@
         {
           plugin = telescope-file-browser-nvim;
           type = "lua";
+          config = ''
+            local telescope = require('telescope')
+            local utils = require('telescope.utils')
+            vim.keymap.set('n', '<leader>fe', telescope.extensions.file_browser.file_browser, {
+              desc = "Root cwd"
+            })
+
+            vim.keymap.set('n', '<leader>fr', 
+              function()
+                telescope.extensions.file_browser.file_browser(
+                  {
+                    path=utils.buffer_dir()
+                  }
+                )
+              end
+            , {
+              desc = "Root cwd"
+            })
+          '';
         }
 
         {
@@ -154,36 +173,29 @@
             -- To get fzf loaded and working with telescope, you need to call
             -- load_extension, somewhere after setup function:
             require('telescope').load_extension('fzf')
+            local utils = require('telescope.utils')
 
             -- Find files
-            vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+            vim.keymap.set('n', '<leader>ff', 
+              function()
+                builtin.find_files({
+                  -- cwd=utils.buffer_dir(),
+                  -- no_ignore=true
+                })
+              end
+            , { desc = 'Telescope find files' })
             -- Find string in Files
             vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Telescope live grep' })
             vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
             vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
             vim.keymap.set('n', 'gd', builtin.lsp_definitions, { desc = 'Telescope list definition on cursor'})
+            -- vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Telescope list definition on cursor'})
             vim.keymap.set('n', 'gr', builtin.lsp_references, { desc = 'Telescope list references on cursor'})
 
             vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open error under cursor'})
             vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'Try to fix error with code'})
             vim.keymap.set('n', '<leader>s', vim.lsp.buf.type_definition, { desc = 'Open signature to function'})
-
-            -- Telescope File browser
-
-            require("telescope").load_extension("file_browser")
-
-            vim.keymap.set("n", "<space>fe", ":Telescope file_browser<CR>")
-
-            -- open file_browser with the path of the current buffer
-            -- vim.keymap.set("n", "<space>fe", ":Telescope file_browser path=%:p:h select_buffer=true<CR>")
-
-            -- Alternatively, using lua API
-            -- vim.keymap.set("n", "<space>fe", function()
-            --     require("telescope").extensions.file_browser.file_browser()
-            -- end)
-
-
 
           '';
         }

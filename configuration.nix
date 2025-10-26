@@ -11,8 +11,11 @@
   
 
   qtile_mod = {
-    enable = true;
+     enable = true;
   };
+  # can't upgrade system without this
+  # https://discourse.nixos.org/t/logrotate-config-fails-due-to-missing-group-30000/28501
+  services.logrotate.checkConfig = false;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;

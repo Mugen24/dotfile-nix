@@ -6,9 +6,9 @@
     ./modules/unsw
   ];
   
-  # qtile_mod = {
-  #   enable = true;
-  # };
+  qtile_mod = {
+    enable = true;
+  };
 
   unsw = {
     enable = true;

@@ -1,7 +1,6 @@
 {...}:
 {
   imports = [
-    ./Other
     ./Programing
     ./Shell
     ./Other
