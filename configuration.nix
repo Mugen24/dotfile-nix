@@ -13,6 +13,7 @@
   qtile_mod = {
      enable = true;
   };
+
   # can't upgrade system without this
   # https://discourse.nixos.org/t/logrotate-config-fails-due-to-missing-group-30000/28501
   services.logrotate.checkConfig = false;
@@ -62,8 +63,14 @@
       vulkan-loader
       vulkan-validation-layers
       vulkan-extension-layer
-      amdvlk
+      # amdvlk
     ];
+    enable32Bit = true;
+
+    extraPackages32 = with pkgs; [ 
+      driversi686Linux.amdvlk
+    ];
+
 };
 	
 nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -276,7 +283,6 @@ services.printing.enable = true;
     # (ffado.override {
     #   withMixer=true;
     # })
-    kdePackages.dolphin
     pciutils
     busybox
     cura-appimage

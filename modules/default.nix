@@ -3,7 +3,7 @@
   imports = [
     ./Programing
     ./Shell
-    ./Other
+    # ./Other
     ./home.nix
     ./Readings
   ];

@@ -34,6 +34,6 @@ in
         #     openFirewall = true;
         # };
         networking.firewall = {
-            allowedTCPPorts = [ 8113 8112 8114 ];
+            allowedTCPPorts = [ 8113 8112 8114 8081 ];
         };
     }

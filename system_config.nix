@@ -19,6 +19,7 @@ in
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
+
   nix.optimise.automatic = true;
 
   # For devenv to setup nixcache ??
@@ -70,7 +71,6 @@ in
     xorg.xinit
     ntfs3g
     pavucontrol
-    clinfo
     unzip
     devenv
     android-tools

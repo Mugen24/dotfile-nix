@@ -25,11 +25,14 @@ in
         #Gaseous Server
         # (pkgs.callPackage ./gamescope.nix)
         # bottles
-        # lutris
+        lutris
 
-        # wine
-        # winetricks
+        wineWowPackages.stable
+        winetricks
+
+        vulkan-tools
       ];
+
 
       programs.gamemode.enable = true;
       programs.gamescope = {
@@ -51,6 +54,23 @@ in
         enable = true;
         lfs.enable = true;
       };
+
+      programs.alvr = {
+        enable = true;
+        # package = pkgs.unstable.alvr;
+        openFirewall = true;
+      };
+
+      # boot.kernelPatches = [
+      #   {
+      #     name = "amdgpu-ignore-ctx-privileges";
+      #     patch = pkgs.fetchpatch {
+      #       name = "cap_sys_nice_begone.patch";
+      #       url = "https://github.com/Frogging-Family/community-patches/raw/master/linux61-tkg/cap_sys_nice_begone.mypatch";
+      #       hash = "sha256-Y3a0+x2xvHsfLax/uwycdJf3xLxvVfkfDVqjkxNaYEo=";
+      #     };
+      #   }
+      # ];
 
       # systemd.user.services.monado.environment = {
       #   STEAMVR_LH_ENABLE = "1";
@@ -95,7 +115,6 @@ in
       #     };
       #   };
       # };
-
 
       programs.steam = {
         enable = true;
@@ -148,6 +167,10 @@ in
       # https://nixos.org/manual/nixos/stable/index.html#module-services-flatpak
       # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
       # flatpak update
+      networking.firewall = {
+        allowedUDPPorts = [ 7777 ];
+      };
+
 
 
     };

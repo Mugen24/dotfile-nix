@@ -17,6 +17,9 @@
         set expandtab
         set number
 
+        " disable safewrite https://github.com/rollup/rollup/issues/1666
+        set backupcopy=yes
+
         " set noautoindent
         " set nosmartindent
         " set nocindent

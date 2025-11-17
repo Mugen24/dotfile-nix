@@ -1,17 +1,36 @@
-{lib, config, ...}:
+{lib, config, pkgs, user, ...}:
 with lib;
 let 
-  cfg = config.virtual_box;
+  cfg = config.vm;
 in 
 {
   options = {
-    virtual_box = {
-      enable = mkEnableOption "Enable module";
-
+    vm = {
+      enable = mkEnableOption "Enable virtualisation module";
     };
   };
 
   config = mkIf cfg.enable {
-    virtualisation.virtualbox.host.enable = true;  
+    environment.systemPackages = with pkgs; [
+      distrobox
+    ];
+
+    users.users.${user} = {
+        extraGroups = [ "libvirtd" ];
+    };
+
+    # virtualisation.libvirtd = {
+    #   enable = true;
+    #   qemu = {
+    #     package = pkgs.qemu_kvm;
+    #     runAsRoot = true;
+    #     swtpm.enable = true;
+    #   };
+    # };
+
+    # programs.virt-manager = {
+    #   enable = true;
+    # };
+
   };
 }
