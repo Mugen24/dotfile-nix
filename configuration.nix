@@ -22,7 +22,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ 
-    "amdgpu" 
   ];
   boot.kernelParams = [
   ];
@@ -40,19 +39,6 @@
     ];
 
     extraModprobeConfig = ''
-        # example settings
-	# options yourmodulename optionA=valueA optionB=valueB # syntax
-	options v4l2loopback video_nr=9 card_label=Video-Loopback exclusive_caps=1
-        # blacklist snd-fireworks
-        # blacklist snd-bebob
-        # blacklist snd-oxfw
-        # blacklist snd-dice
-        # blacklist snd-firewire-digi00x
-        # blacklist snd-firewire-tascam
-        # blacklist snd-firewire-lib
-        # blacklist snd-firewire-transceiver
-        # blacklist snd-fireface
-        # blacklist snd-firewire-motu
     '';
   };
 
@@ -290,6 +276,8 @@ services.printing.enable = true;
     # notification manager
     dunst
     libnotify
+
+    nautilus
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -72,6 +72,14 @@ in
 
     pandoc
     texlive.combined.scheme-small
+
+
+    # Test: Apps
+    (discord.override {
+      # withOpenASAR = true; # can do this here too
+      withVencord = true;
+    })
+
   ];
   home-manager.users.${user} = {
     # imports = [
