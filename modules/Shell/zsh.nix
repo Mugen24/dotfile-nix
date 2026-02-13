@@ -18,6 +18,12 @@ in
 		  enableZshIntegration = true	;
 		};
 
+		programs.direnv = {
+			# enable automatic nix dev shell setup using .envrc
+			enable = true;
+			nix-direnv.enable = true;
+		};
+
 		programs.zsh = {
 			enable = true;
 			enableCompletion = true;
@@ -65,14 +71,11 @@ in
 				fi
 
 				#TMUX_FZF_LAUNCH_KEY="M-f"
-
-
 			'';
 			shellGlobalAliases = {
 				nt = "cd /etc/nixos; sudo nixos-rebuild test --flake .#mugen --no-reexec";
 				ns = "cd /etc/nixos; sudo nixos-rebuild switch --flake .#mugen --no-reexec";
 				ls = "eza -l --color=always --time-style relative";
-
 			};
 
 			localVariables = {
