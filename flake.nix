@@ -1,55 +1,42 @@
 {
   description = "A configuration.nix replacement";
   inputs = {
-    # nixpkgs.url = "github:nixOS/nixpkgs/nixos-24.11";
-    nur = {
-      url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
-  outputs = { self, nur, nixpkgs, home-manager, ... }@input: 
+  outputs = { self, nixpkgs, home-manager, nixvim, ... }: 
   let 
+    globals = rec {
+      user = "mugen";
+      fullName = "John Nguyen";
+      gitName = fullName;
+    };
     system = "x86_64-linux";
-    device = "main_pc";
-    user = "mugen";
-    # home_flake = import /home/mugen/.config/home-manager/flake.nix;
-    # home_flake_out = home_flake.outputs {
-    #   inherit self;
-    #   inherit nixpkgs;
-    #   inherit home-manager;
-    # };
   in
   {
-    nixosConfigurations.${user} = nixpkgs.lib.nixosSystem {
-      system = system;
-      specialArgs = {
-        device = device;
-        user = user;
-      };
-      modules = [
+    homeConfigurations."${globals.user}" = home-manager.lib.homeManagerConfiguration rec {
+      pkgs = nixpkgs.legacyPackages.${system};
+      extraSpecialArgs = { inherit globals; };
+      modules = [ 
+        (import ./home-manager)
         {
-          nixpkgs.config.allowUnfree = true;
-          nixpkgs.overlays = [ nur.overlays.default ];
+          home.stateVersion = "25.11";
+          home.username = globals.user;
+          home.homeDirectory = "/home/${globals.user}";
+          programs.home-manager.enable = true;
         }
-        ./configuration.nix
-        ./modules
-        home-manager.nixosModules.home-manager
         {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${user} = {
-            imports = [];
-          };
+          home.packages = [
+            # Nix lsp 
+            pkgs.nil
+            pkgs.nixfmt
+          ];
         }
       ];
     };
-
   };
 }
