@@ -113,11 +113,25 @@
                     '';
                 }
 
-
                 {
                     plugin = nvim-dap-ui;
                     type = "lua";
                     config = ''
+                    '';
+                }
+
+                {
+                    plugin = guess-indent-nvim;
+                    type = "lua";
+                    config = ''
+                    '';
+                }
+
+                {
+                    plugin = multicursor-nvim;
+                    type = "lua";
+                    config = ''
+                        local mc = require("multicursor-nvim").setup()
                     '';
                 }
             
