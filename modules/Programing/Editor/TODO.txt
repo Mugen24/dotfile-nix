@@ -1,3 +1,0 @@
-keymap delete but not save to buffer
-remove newline from copy string
-allow copy vim text to clipboard buffer
