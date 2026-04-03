@@ -1,18 +1,33 @@
 from os import getenv
 import json
-PROJECT_ROOT = getenv("USER_ROOT")
-THEME = getenv("USER_THEME")
-
-MONITORS: int = int(getenv("USER_MONITORS_LIST", "1"))
-WALLPAPER = f"{PROJECT_ROOT}/modules/WMs/wallpapers/default.jpg"
+from pathlib import Path
+PROJECT_ROOT = Path("/etc/xdg/qtile")
+WALLPAPER = PROJECT_ROOT / "background"
+CONFIG_PATH = PROJECT_ROOT / "config.json"
 SCHEMA = {}
+try: 
+    # monitors_list: ${config.system.qtile_mod.monitors_list}
+    with CONFIG_PATH.open() as fp:
+        config = json.load(fp)
 
-if THEME == "shallow":
-    WALLPAPER = f"{PROJECT_ROOT}/modules/WMs/wallpapers/neon_shallows.png"
-    try: 
-        path = f"{PROJECT_ROOT}/customisation_config/shallow/schema.json"
-        with open(path, "r") as fp:
-            SCHEMA = json.load(fp)
-    except:
-        pass
+    MONITORS: int = int(config["monitors_list"])
+    SCHEMA = {
+        "primaryLight": config["primaryLight"],
+        "primaryDark": config["primaryDark"],
+        "secondaryLight": config["secondaryLight"],
+        "secondaryDark": config["secondaryDark"],
+        "neutral" : config["neutral"],
+    }
+except Exception as e:
+    print(e)
+    pass
+
+# try: 
+#     path = f"{PROJECT_ROOT}/customisation_config/shallow/schema.json"
+#     with open(path, "r") as fp:
+#         SCHEMA = json.load(fp)
+
+# except Exception as e:
+#     print(e)
+#     pass
 
