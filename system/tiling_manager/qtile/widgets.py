@@ -61,10 +61,9 @@ def group(**kargs):
         other_current_screen_border = transparent,
         this_current_screen_border = transparent,
         this_screen_border = transparent,
-        # active = transparent, inner color,
-
+        active = transparent,
         block_highlight_text_color = secondaryLight,
-        active = primaryLight,
+        # active = primaryLight,
         inactive = black,
         **kargs
     ) 
@@ -138,7 +137,7 @@ def main_widget():
             length=10
         ),
         
-        bluetooth(**rounded_border(primaryLight, left_round), padding=10),
+        # bluetooth(**rounded_border(primaryLight, left_round), padding=10),
         widget.Spacer(
             length=2,
             background=primaryLight,
@@ -148,7 +147,7 @@ def main_widget():
             length=6,
             background=primaryLight
         ),
-        pulse_volume(**rounded_border(primaryLight, right_round,), adding=10),
+        # pulse_volume(**rounded_border(primaryLight, right_round,), adding=10),
 
         widget.Spacer(
             length=10
@@ -205,20 +204,20 @@ screens = [
     Screen(
         wallpaper=WALLPAPER,
         wallpaper_mode='fill',
-        bottom=bar.Bar(main_widget(), 30, background="#00000000", margin=5)
+        bottom=bar.Bar(main_widget(), 30, background=f"{white}", margin=5)
      # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
      # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
     )
 ]
 
-screens = screens + [
-    Screen(
-        wallpaper=WALLPAPER,
-        wallpaper_mode='fill',
-        bottom=bar.Bar(secondary_widget(), 25, background="#00000000", margin=5)
-
-     # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-     # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-    )
-    for _ in range(1, MONITORS)
-]
+# screens = screens + [
+#     Screen(
+#         wallpaper=WALLPAPER,
+#         wallpaper_mode='fill',
+#         bottom=bar.Bar(secondary_widget(), 25, background="#00000000", margin=5)
+# 
+#      # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+#      # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+#     )
+#     for _ in range(1, MONITORS)
+# ]
