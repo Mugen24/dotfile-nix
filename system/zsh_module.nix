@@ -16,6 +16,9 @@
       users.users.${globals.user} = {
         shell = pkgs.zsh;
       };
+      environment.systemPackages = [
+        pkgs.kitty
+      ];
     }
   ]);
 }

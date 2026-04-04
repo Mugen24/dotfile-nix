@@ -25,6 +25,18 @@
             vscodevim.vim
             jnoortheen.nix-ide
           ];
+          keybindings = [
+            {
+              "key" = "ctrl+n";
+              "command" = "workbench.action.quickOpenSelectNext";
+              "when" = "inQuickOpen";
+            }
+            {
+              "key" = "ctrl+p";
+              "command" = "workbench.action.quickOpenSelectPrevious";
+              "when" = "inQuickOpen";
+            }
+          ];
           userSettings = {
             "workbench.colorTheme" = "Dracula Theme";
             "vim.insertModeKeyBindings" = [
@@ -36,7 +48,13 @@
                 "after" = [ "<esc>" ];
               }
             ];
-
+            "vim.leader" = "<space>";
+            "vim.normalModeKeyBindingsNonRecursive" = [
+                {
+                    "before" = ["<leader>" "f" "f"];
+                    "commands" = ["workbench.action.quickOpen"];
+                }
+            ];
             "nix.enableLanguageServer" = true;
             "nix.serverPath" = "nil";
             "nix.serverSettings" = {

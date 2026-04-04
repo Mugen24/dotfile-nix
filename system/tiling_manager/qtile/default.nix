@@ -53,8 +53,15 @@ with lib;
   config = mkIf config.system.qtile_mod.enable {
     environment.systemPackages = [
       pkgs.rofi
-      pkgs.kitty
+      pkgs.picom
+      # pkgs.kitty
+      # pkgs.polybar
     ];
+    # Needed for transparent bar
+    services.picom = {
+      enable = true;
+    };
+
     services.xserver.windowManager.qtile = {
       enable = true;
       configFile = ./config.py;

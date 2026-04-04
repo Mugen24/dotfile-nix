@@ -75,17 +75,23 @@
           ];
 
           initContent = ''
-            									ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
-            									unsetopt BEEP
+            ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+            unsetopt BEEP
 
-            									# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath' # remember to use single quote here!!!
-            									zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l --color=always $realpath' # remember to use single quote here!!!
-            								'';
+            # zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath' # remember to use single quote here!!!
+            zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l --color=always $realpath' # remember to use single quote here!!!
+
+            if [ -z "$TMUX" ]; then
+              tmux new-session -A -s Main
+            fi
+
+          '';
           shellGlobalAliases = {
             ls = "eza -l --color=always --time-style relative";
             hm-build = "home-manager build --flake .";
             hm-switch = "home-manager switch --flake .";
             hm = "hm-build; hm-switch";
+            mmux = "tmux new-session -A -s Main";
           };
 
           localVariables = {

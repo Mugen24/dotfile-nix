@@ -10,6 +10,7 @@ in
     (
       import ./qtile 
     )
+    # ./polybar
   ];
 
 }
