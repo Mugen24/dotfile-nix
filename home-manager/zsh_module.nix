@@ -24,6 +24,7 @@
       {
         home.packages = [
           pkgs.eza
+          pkgs.fzf
         ];
 
         programs.git = {
@@ -58,6 +59,17 @@
           oh-my-zsh = {
             enable = true;
             theme = "awesomepanda";
+            plugins = [
+                "git"
+                "sudo"
+                "aliases"
+                "aws"
+                "alias-finder"
+                "eza"
+                "fzf"
+                # "vi-mode"
+                "virtualenv"
+            ];
           };
 
           plugins = [
@@ -76,6 +88,11 @@
 
           initContent = ''
             ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+            bindkey -v
+            bindkey -M viins 'jj' vi-cmd-mode
+
+            eval "$(zoxide init zsh --cmd cd)"
+
             unsetopt BEEP
 
             # zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls $realpath' # remember to use single quote here!!!
@@ -87,7 +104,7 @@
 
           '';
           shellGlobalAliases = {
-            ls = "eza -l --color=always --time-style relative";
+            # ls = "eza -l --color=always --time-style relative";
             hm-build = "home-manager build --flake .";
             hm-switch = "home-manager switch --flake .";
             hm = "hm-build; hm-switch";

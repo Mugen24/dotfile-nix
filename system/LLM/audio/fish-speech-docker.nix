@@ -44,7 +44,7 @@ in
       # "--device=nvidia.com/gpu=all"
       "--network-alias=app-base"
       "--network=fish-speech_default"
-      "--publish=8111:${GRADIO_SERVER_PORT}"
+      "--publish=${GRADIO_SERVER_PORT}:${GRADIO_SERVER_PORT}"
     ];
   };
   systemd.services."podman-fish-speech-app-base" = {
@@ -87,6 +87,7 @@ in
       Type = "oneshot";
       TimeoutSec = 300;
     };
+    # podman build -t compose2nix-fish-speech-app-base --build-arg BACKEND=cuda --build-arg CUDA_VER=12.9.0 --build-arg UV_EXTRA=cu129 --platform linux/amd64 --target webui -t fish-speech-webui:cpu -f docker/Dockerfile .
     script = ''
       cd /home/mugen/dotfile-nix/system/LLM/audio/fish-speech
       podman build -t compose2nix-fish-speech-app-base --build-arg BACKEND=cpu --platform linux/amd64 --target webui -t fish-speech-webui:cpu -f docker/Dockerfile .
