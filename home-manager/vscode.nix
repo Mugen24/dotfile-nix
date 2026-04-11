@@ -19,11 +19,13 @@
 
         programs.vscode = {
           enable = true;
-          mutableExtensionsDir = true;
+          # mutableExtensionsDir = true;
+          mutableExtensionsDir = false;
           extensions = with pkgs.vscode-extensions; [
             dracula-theme.theme-dracula
             vscodevim.vim
             jnoortheen.nix-ide
+            continue.continue
           ];
           keybindings = [
             {

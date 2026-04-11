@@ -82,7 +82,7 @@
             zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -l --color=always $realpath' # remember to use single quote here!!!
 
             if [ -z "$TMUX" ]; then
-              tmux new-session -A -s Main
+              tmux 
             fi
 
           '';

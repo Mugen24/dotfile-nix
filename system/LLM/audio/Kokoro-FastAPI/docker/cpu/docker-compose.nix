@@ -1,4 +1,7 @@
 # Auto-generated using compose2nix v0.3.0.
+# IMPORTANT
+# WE might need to run the build service once first the build the image
+
 { pkgs, lib, ... }:
 
 {
@@ -21,7 +24,7 @@
 
   # Containers
   virtualisation.oci-containers.containers."kokoro_api-kokoro-tts" = {
-    image = "localhost/compose2nix-kokoro_api-kokoro-tts";
+    image = "compose2nix-kokoro_api-kokoro-tts";
     environment = {
       "API_LOG_LEVEL" = "DEBUG";
       "ONNX_ARENA_EXTEND_STRATEGY" = "kNextPowerOfTwo";

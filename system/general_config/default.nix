@@ -10,6 +10,7 @@
       btop
       git
       gh
+      vesktop
     ];
       
     #https://www.reddit.com/r/NixOS/comments/185f0x4/how_to_mount_a_usb_drive/
@@ -23,6 +24,20 @@
     networking.networkmanager = {
       enable = true;
     };
+
+    # The nix-ld tool allows unpatched binaries (like those from pip, npm, or pre-compiled games) 
+    # to find required libraries automatically.
+    programs.nix-ld.enable = true;
+    programs.nix-ld.libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib
+      fuse3
+      icu
+      nss
+      openssl
+      curl
+      expat
+    ];
 
 
 

@@ -41,5 +41,7 @@
       EndSection
       '';
     };
+
+    boot.initrd.kernelModules = [ "amdgpu" ];
   };
 }

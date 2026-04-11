@@ -1,4 +1,4 @@
-{pkgs, lib, config, pkgs-unstable, ...}:
+{options, pkgs, lib, config, pkgs-unstable, ...}:
 {
   options.system.LLM.ollama = {
     enable = lib.mkEnableOption "Enable";
@@ -11,13 +11,39 @@
   };
 
   config = lib.mkIf config.system.LLM.ollama.enable {
-    services.ollama = {
-      enable = true;
-      acceleration = "rocm";
-      package = pkgs-unstable.ollama-rocm;
-    } //
-    lib.mkIf config.system.LLM.ollama.download_path {
-      models = config.system.LLM.ollama.download_path;
+
+
+    environment.systemPackages = [ 
+        pkgs-unstable.ollama-rocm 
+        pkgs.python313
+        pkgs.python313Packages.huggingface-hub
+    ];
+
+
+    services.ollama = lib.mkMerge [
+      {
+        enable = true;
+        acceleration = "rocm";
+        package = pkgs-unstable.ollama-rocm;
+        rocmOverrideGfx = "11.0.0";
+        # For debugging
+        environmentVariables.OLLAMA_DEBUG="1";
+      }
+      (
+        lib.mkIf (options.system.LLM.ollama ? download_path) {
+          models = config.system.LLM.ollama.download_path;
+        }
+      )
+    ]; 
+
+    hardware.graphics.enable = true;
+    services.open-webui = {
+        enable = true;
+        port = 9000;
     };
+    # //
+    # lib.mkIf config.system.LLM.ollama.download_path {
+    #   models = config.system.LLM.ollama.download_path;
+    # };
   };
 }

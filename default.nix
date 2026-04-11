@@ -17,9 +17,6 @@
   config.system.gpus = {
     amd.enable = true;
   };
-  config.system.LLM.ollama = {
-    enable = true; 
-  };
   config.gaming = {
     enable = true;
   };

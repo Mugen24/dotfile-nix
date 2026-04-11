@@ -7,6 +7,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+    # For converting docker to nixos compatible 
+    compose2nix.url = "github:aksiksi/compose2nix/v0.3.0";
+    compose2nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -15,6 +19,7 @@
       nixpkgs,
       home-manager,
       nixpkgs-unstable,
+      compose2nix,
       ...
     }:
     let
@@ -66,9 +71,17 @@
           globals = globals;
           pkgs-unstable = pkgs-unstable;
         };
+
+
         modules = [
-          ./configuration.nix
           ./system
+          ./configuration.nix
+          {
+            nixpkgs.config.allowUnfree = true;
+            environment.systemPackages = [
+              compose2nix.packages.x86_64-linux.default
+            ];
+          }
 
           home-manager.nixosModules.home-manager
           {
