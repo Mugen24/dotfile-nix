@@ -7,11 +7,11 @@
   ...
 }:
 {
-  options.extra-keybind = {
+  options.extra-keybinds = {
     enable = lib.mkEnableOption "enable";
   };
 
-  config = lib.mkIf config.custom-keybind.enable (
+  config = lib.mkIf config.extra-keybinds.enable (
     {
       services.xremap = {
         enable = true;

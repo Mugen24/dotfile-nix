@@ -33,6 +33,9 @@
             user.name = globals.gitName;
             user.email = globals.email;
           };
+          lfs = {
+            enable = true;
+          };
         };
 
         # z-jump

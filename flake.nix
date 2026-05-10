@@ -47,7 +47,7 @@
       home-manager-modules = [
         ./home-manager
 
-        inputs.xremap-flake.homeManagerModules.default
+        inputs.xremap.homeManagerModules.default
 
         {
           home.stateVersion = "25.11";
