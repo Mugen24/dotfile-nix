@@ -17,7 +17,14 @@
         pkgs-unstable.ollama-rocm 
         pkgs.python313
         pkgs.python313Packages.huggingface-hub
+        pkgs.pnpm
+        pkgs.nodejs_24
     ];
+
+    # required for mcp tool use in continue
+    programs.npm = {
+        enable = true;
+    };
 
 
     services.ollama = lib.mkMerge [

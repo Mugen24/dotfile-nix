@@ -40,6 +40,7 @@
             }
           ];
           userSettings = {
+            "continue.enableConsole" = true;
             "workbench.colorTheme" = "Dracula Theme";
             "vim.insertModeKeyBindings" = [
               {

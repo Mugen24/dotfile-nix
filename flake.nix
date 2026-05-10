@@ -11,15 +11,24 @@
     # For converting docker to nixos compatible 
     compose2nix.url = "github:aksiksi/compose2nix/v0.3.0";
     compose2nix.inputs.nixpkgs.follows = "nixpkgs";
+    airi-pkgs = {
+        url = "github:moeru-ai/airi";
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
+    xremap = {
+        # System key remapper
+        url = "github:xremap/nix-flake";
+    };
   };
 
   outputs =
-    {
+    inputs@{
       self,
       nixpkgs,
       home-manager,
       nixpkgs-unstable,
       compose2nix,
+      # airi-pkgs,
       ...
     }:
     let
@@ -37,6 +46,8 @@
 
       home-manager-modules = [
         ./home-manager
+
+        inputs.xremap-flake.homeManagerModules.default
 
         {
           home.stateVersion = "25.11";
@@ -80,6 +91,7 @@
             nixpkgs.config.allowUnfree = true;
             environment.systemPackages = [
               compose2nix.packages.x86_64-linux.default
+              # airi-pkgs.packages.x86_64-linux.default
             ];
           }
 

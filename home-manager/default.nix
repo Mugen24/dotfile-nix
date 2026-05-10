@@ -5,6 +5,7 @@
         ./tmux_module.nix
         ./nvim
         ./vscode.nix
+        ./extra_keybinds.nix
     ];
 
     # config.zsh.enable = true;

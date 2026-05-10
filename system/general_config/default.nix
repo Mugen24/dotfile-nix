@@ -54,4 +54,10 @@
         extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
       };
     };
+
+
+    # Enables flatpak
+    services.flatpak = {
+        enable = true;
+    };
 }
