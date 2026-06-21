@@ -4,5 +4,5 @@
     config.tmux.enable = true;
     config.nvim.enable = true;
     config.vscode.enable = true;
-    config.extra-keybinds.enable = true;
+    # config.extra-keybinds.enable = true;
 }

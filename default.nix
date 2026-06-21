@@ -20,4 +20,5 @@
   config.gaming = {
     enable = true;
   };
+  config.extra_keybinds.enable = true;
 }

@@ -4,6 +4,7 @@
         ./garbage_collect.nix
         ./sound.nix
         ./boot_settings.nix
+        ./extra_keybinds.nix
     ];
 
     environment.systemPackages = with pkgs; [
