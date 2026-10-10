@@ -60,9 +60,19 @@ config.system.qtile_mod = {
 };
 ```
 
-`palette` picks one of the Material You palettes vendored from [Lucid](https://github.com/Sn3akyy1/lucid) into `system/tiling_manager/qtile/palettes/`: `catppuccin-mocha`, `gruvbox`, `nightfox`, `nord`, `pywal`, `tokyo-night`. The palette's colour roles map onto the theme slots (`primary` → `primaryLight`, `surface` → `primaryDark`, `secondary` → `secondaryLight`, `surface_container_high` → `secondaryDark`, `surface_variant` → `neutral`).
+`palette` picks one of the palettes vendored in `system/tiling_manager/qtile/palettes/`. The palette's Material You colour roles map onto the theme slots (`primary` → `primaryLight`, `surface` → `primaryDark`, `secondary` → `secondaryLight`, `surface_container_high` → `secondaryDark`, `surface_variant` → `neutral`).
 
-With `palette = "custom"` (the default) the explicit theme block is used instead — and any `theme.*` value you set always overrides the palette:
+All `system.qtile_mod` options:
+
+| Option          | Type          | Default   | Values / notes                                                                                          |
+| --------------- | ------------- | --------- | ------------------------------------------------------------------------------------------------------- |
+| `enable`        | bool          | `false`   | Installs qtile + picom + rofi                                                                            |
+| `palette`       | enum          | `custom`  | `custom`, `evangelion` (the original red/green theme), `catppuccin-mocha`, `gruvbox`, `nightfox`, `nord`, `pywal`, `tokyo-night` (vendored from [Lucid](https://github.com/Sn3akyy1/lucid)) |
+| `monitors_list` | enum `[1 2]`  | `2`       | Bar/widget layout for 1 or 2 monitors                                                                    |
+| `background`    | path          | —         | Wallpaper image, written to `/etc/xdg/qtile/background`                                                  |
+| `theme.*`       | str (hex)     | evangelion colours | `primaryLight`, `primaryDark`, `secondaryLight`, `secondaryDark`, `neutral` — any value set overrides the selected palette |
+
+With `palette = "custom"` the explicit theme block is used instead:
 
 ```nix
 config.system.qtile_mod = {
@@ -76,6 +86,8 @@ config.system.qtile_mod = {
   };
 };
 ```
+
+To add a palette: drop a `<name>.json` with the roles `primary`, `secondary`, `surface`, `surface_container_high`, `surface_variant` into `system/tiling_manager/qtile/palettes/` and add `<name>` to `paletteNames` in `system/tiling_manager/qtile/default.nix`.
 
 The qtile module (`system/tiling_manager/qtile/default.nix`) writes these values to `/etc/xdg/qtile/config.json` and the wallpaper to `/etc/xdg/qtile/background`, which `config.py` and `widgets.py` read at runtime. Any wallpaper path and any hex palette works. Editor/terminal themes live with their modules: `home-manager/nvim/theme.nix` (dracula) and the tmux module (tokyo-night).
 

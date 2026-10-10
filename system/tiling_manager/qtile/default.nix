@@ -1,10 +1,21 @@
-
-    # "primaryLight": "#a22a32",
-    # "primaryDark": "#1e272a",
-    # "secondaryLight": "#24e189",
-    # "secondaryDark": "",
-    # "neutral" : "#312730",
-    # "link": "https://coolors.co/1e272a-a22a32-24e189-4b2327-312730"
+# qtile window manager module.
+#
+# Options (system.qtile_mod.*):
+#   enable         bool                    default false  — install qtile + picom + rofi
+#   palette        enum                    default "custom"
+#                  custom | evangelion | catppuccin-mocha | gruvbox |
+#                  nightfox | nord | pywal | tokyo-night
+#                  "custom" uses the theme.* values below; a named value loads
+#                  ./palettes/<name>.json (Material You roles from Lucid,
+#                  https://github.com/Sn3akyy1/lucid) mapped onto the theme slots.
+#   monitors_list  enum [1 2]              default 2      — bars/widgets layout
+#   background     path                                 — wallpaper image
+#   theme.*        str (hex colour)                     — primaryLight, primaryDark,
+#                  secondaryLight, secondaryDark, neutral; any value set here
+#                  overrides the selected palette
+#
+# Colours are written to /etc/xdg/qtile/config.json, the wallpaper to
+# /etc/xdg/qtile/background; config.py/widgets.py read them at runtime.
 {
   pkgs,
   lib,
@@ -14,9 +25,12 @@
 with lib;
 let
   cfg = config.system.qtile_mod;
-  # Palettes vendored from Lucid (https://github.com/Sn3akyy1/lucid),
-  # Material You colour roles mapped onto the qtile theme slots.
+  # Palette names must have a matching ./palettes/<name>.json with the
+  # Material You roles: primary, secondary, surface, surface_container_high,
+  # surface_variant. Lucid palettes vendored from https://github.com/Sn3akyy1/lucid;
+  # "evangelion" is the original custom theme (https://coolors.co/1e272a-a22a32-24e189-4b2327-312730).
   paletteNames = [
+    "evangelion"
     "catppuccin-mocha"
     "gruvbox"
     "nightfox"
