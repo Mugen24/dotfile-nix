@@ -6,7 +6,7 @@
 #                  custom | evangelion | catppuccin-mocha | gruvbox |
 #                  nightfox | nord | pywal | tokyo-night
 #                  "custom" uses the theme.* values below; a named value loads
-#                  ./palettes/<name>.json (Material You roles from Lucid,
+#                  ../../../theme/palettes/<name>.json (Material You roles from Lucid,
 #                  https://github.com/Sn3akyy1/lucid) mapped onto the theme slots.
 #   monitors_list  enum [1 2]              default 2      — bars/widgets layout
 #   background     path                                 — wallpaper image
@@ -25,7 +25,7 @@
 with lib;
 let
   cfg = config.system.qtile_mod;
-  # Palette names must have a matching ./palettes/<name>.json with the
+  # Palette names must have a matching ../../../theme/palettes/<name>.json with the
   # Material You roles: primary, secondary, surface, surface_container_high,
   # surface_variant. Lucid palettes vendored from https://github.com/Sn3akyy1/lucid;
   # "evangelion" is the original custom theme (https://coolors.co/1e272a-a22a32-24e189-4b2327-312730).
@@ -42,7 +42,7 @@ let
   paletteColors =
     name:
     let
-      p = builtins.fromJSON (builtins.readFile (./palettes + "/${name}.json"));
+      p = builtins.fromJSON (builtins.readFile (../../../theme/palettes + "/${name}.json"));
     in
     {
       primaryLight = p.primary;
@@ -60,7 +60,7 @@ in
       default = "custom";
       description = ''
         Colour palette for the bar/widgets. "custom" uses the theme.* values
-        below; anything else loads a vendored Lucid palette from ./palettes
+        below; anything else loads a vendored Lucid palette from ../../../theme/palettes
         (individual theme.* settings still override the palette).
       '';
     };

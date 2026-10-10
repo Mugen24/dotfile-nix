@@ -29,7 +29,7 @@ Every module defines its own `enable` option and is inert until switched on. You
 | `gaming` (+ `enableVR`) | Steam/gaming stack, VR support                 |
 | `system.LLM.ollama`     | Ollama with a configurable model storage path  |
 | `extra_keybinds`        | System-wide key remapping (xremap)             |
-| `system.grub_theme`     | GRUB boot menu with a vendored Evangelion theme (switches the bootloader from systemd-boot to GRUB; pick `theme` from `system/grub/themes/` — ayanami, eva01, eva02, penpen, ramiel, seele, soryu, wunder — and a `resolution` of 720p/1080p/1440p) |
+| `system.grub_theme`     | GRUB boot menu with a vendored Evangelion theme (switches the bootloader from systemd-boot to GRUB; pick `theme` from `theme/grub/themes/` — ayanami, eva01, eva02, penpen, ramiel, seele, soryu, wunder — and a `resolution` of 720p/1080p/1440p) |
 | `system.lucid`          | Hyprland session with the vendored [Lucid](https://github.com/Sn3akyy1/lucid) desktop shell (bar, dock, widgets, lock screen). Adds a session at the GDM login screen — qtile stays installed. Options: `theme` (matugen \| catppuccin-mocha \| gruvbox \| nightfox \| nord \| pywal \| tokyo-night, or a custom theme dropped into `~/.config/lucid/themes/`) and `mode` (dark \| light). Switching `theme` live-reloads the shell on rebuild |
 
 **User-level modules** (`home-manager/`) — toggled in the root `default-home-manager.nix`:
@@ -49,7 +49,7 @@ Device-specific settings live in `devices/<hostname>/` (extra drive mounts, devi
 
 ### Theming
 
-The desktop theme is data, not code — change it in one place and it propagates:
+The desktop theme is data, not code — change it in one place and it propagates. Everything theme-related lives under `theme/` — see **[theme/README.md](theme/README.md)** for the full catalogue with each theme's look.
 
 ```nix
 # default.nix (root)
@@ -61,7 +61,7 @@ config.system.qtile_mod = {
 };
 ```
 
-`palette` picks one of the palettes vendored in `system/tiling_manager/qtile/palettes/`. The palette's Material You colour roles map onto the theme slots (`primary` → `primaryLight`, `surface` → `primaryDark`, `secondary` → `secondaryLight`, `surface_container_high` → `secondaryDark`, `surface_variant` → `neutral`).
+`palette` picks one of the palettes vendored in `theme/palettes/`. The palette's Material You colour roles map onto the theme slots (`primary` → `primaryLight`, `surface` → `primaryDark`, `secondary` → `secondaryLight`, `surface_container_high` → `secondaryDark`, `surface_variant` → `neutral`).
 
 All `system.qtile_mod` options:
 
@@ -89,13 +89,13 @@ config.system.qtile_mod = {
 };
 ```
 
-To add a palette: drop a `<name>.json` with the roles `primary`, `secondary`, `surface`, `surface_container_high`, `surface_variant` into `system/tiling_manager/qtile/palettes/` and add `<name>` to `paletteNames` in `system/tiling_manager/qtile/default.nix`.
+To add a palette: drop a `<name>.json` with the roles `primary`, `secondary`, `surface`, `surface_container_high`, `surface_variant` into `theme/palettes/` and add `<name>` to `paletteNames` in `system/tiling_manager/qtile/default.nix`.
 
 The qtile module (`system/tiling_manager/qtile/default.nix`) writes these values to `/etc/xdg/qtile/config.json` and the wallpaper to `/etc/xdg/qtile/background`, which `config.py` and `widgets.py` read at runtime. Any wallpaper path and any hex palette works. Editor/terminal themes live with their modules: `home-manager/nvim/theme.nix` (dracula) and the tmux module (tokyo-night).
 
 ### Boot theme (GRUB) and matching wallpapers
 
-`system/grub/` vendors 8 Evangelion GRUB themes (each in 720p/1080p/1440p) plus their matching 4K wallpapers:
+`theme/grub/` vendors 8 Evangelion GRUB themes (each in 720p/1080p/1440p) plus their matching 4K wallpapers:
 
 ```nix
 # default.nix (root)
@@ -108,7 +108,7 @@ config.system.grub_theme = {
 
 Enabling the module switches the bootloader from systemd-boot to GRUB automatically (and back when disabled). These themes draw their menu with a bundled native GRUB module instead of a standard menu widget; the module detects the theme's `cards.cfg` and emits the matching `insmod`/`source` lines into `grub.cfg` itself, with a fallback to the plain console menu if the module fails to load. Rollback generations live in the "NixOS - All Configurations" submenu entry.
 
-The desktop wallpaper is configured separately (`qtile_mod.background`) — it does not follow the boot theme. If you ever want them in sync, `system.grub_theme.wallpaper` is a read-only option pointing at `system/grub/wallpapers/<theme>.png`:
+The desktop wallpaper is configured separately (`qtile_mod.background`) — it does not follow the boot theme. If you ever want them in sync, `system.grub_theme.wallpaper` is a read-only option pointing at `theme/grub/wallpapers/<theme>.png`:
 
 ```nix
 config.system.qtile_mod.background = config.system.grub_theme.wallpaper;
@@ -116,7 +116,7 @@ config.system.qtile_mod.background = config.system.grub_theme.wallpaper;
 
 ### Cell Tower look (qtile/X11)
 
-`system/celltower/` vendors the [Cell Tower](https://gitlab.com/dejan-z/xfce-stuff/-/tree/main/Cell%20Tower) GTK theme and its 4K wallpaper. No XFCE session is installed — only the standalone apps.
+`theme/celltower/` vendors the [Cell Tower](https://gitlab.com/dejan-z/xfce-stuff/-/tree/main/Cell%20Tower) GTK theme and its 4K wallpaper. No XFCE session is installed — only the standalone apps.
 
 ```nix
 # default.nix (root)
@@ -135,11 +135,11 @@ The icon pack from the original dotfiles is not vendored (opendesktop.org blocks
 
 Note: the theme ships GTK 2/3 assets only, so GTK 4 apps (e.g. nautilus) keep their default look.
 
-To add a new GRUB theme later: drop its directory into `system/grub/themes/<name>/<resolution>/` (with a `theme.txt`), add `<name>` to `availableThemes` in `system/grub/default.nix`, and optionally add a matching `system/grub/wallpapers/<name>.png`. Extra wallpapers you just want to pick from can go straight into `system/grub/wallpapers/` (or `system/tiling_manager/wallpapers/`) with no module changes.
+To add a new GRUB theme later: drop its directory into `theme/grub/themes/<name>/<resolution>/` (with a `theme.txt`), add `<name>` to `availableThemes` in `theme/grub/default.nix`, and optionally add a matching `theme/grub/wallpapers/<name>.png`. Extra wallpapers you just want to pick from can go straight into `theme/grub/wallpapers/` (or `theme/wallpapers/`) with no module changes.
 
 ### Lucid shell (Hyprland session)
 
-`system/lucid/` vendors the full [Lucid](https://github.com/Sn3akyy1/lucid) desktop shell (Quickshell bar, dock/launcher, widgets, lock screen) minus its ~180MB wallpaper pack. Enabling `system.lucid` adds a **Hyprland** entry to the GDM login screen — qtile is untouched, so you can move between the two per login.
+`theme/lucid/` vendors the full [Lucid](https://github.com/Sn3akyy1/lucid) desktop shell (Quickshell bar, dock/launcher, widgets, lock screen) minus its ~180MB wallpaper pack. Enabling `system.lucid` adds a **Hyprland** entry to the GDM login screen — qtile is untouched, so you can move between the two per login.
 
 ```nix
 # default.nix (root)
@@ -156,9 +156,9 @@ How it's wired:
 - `~/.config/quickshell` is a read-only link to the vendored shell; `~/.config/hypr` is refreshed from the vendored Lua config on every activation.
 - `~/.config/lucid` (scripts, palettes, state) is **seeded once, then writable** — the shell's own settings edits survive rebuilds. Deleting a file there re-seeds it on the next switch.
 - `theme`/`mode` are written to `~/.cache/current_theme` / `~/.cache/current_mode` on every activation, and the shell live-reloads on the change — so switching theme = edit `default.nix`, rebuild. Runtime theme picks inside the shell are overridden by the next rebuild.
-- The wallpaper picker (`SUPER+B`) is pre-pointed at `system/grub/wallpapers/`. Lucid's own ~180MB wallpaper pack is not vendored; drop images into `~/Pictures/wallpapers/` or change `wallpaperFolder` in the shell settings.
+- The wallpaper picker (`SUPER+B`) is pre-pointed at `theme/grub/wallpapers/`. Lucid's own ~180MB wallpaper pack is not vendored; drop images into `~/Pictures/wallpapers/` or change `wallpaperFolder` in the shell settings.
 - Custom themes: drop `<name>/quickshell.json` into `~/.config/lucid/themes/` and set `system.lucid.theme = "<name>"`.
-- To update the vendored shell: clone the Lucid repo and `rsync -a --delete --exclude=.git --exclude=wallpapers lucid/ system/lucid/shell/`, then rebuild.
+- To update the vendored shell: clone the Lucid repo and `rsync -a --delete --exclude=.git --exclude=wallpapers lucid/ theme/lucid/shell/`, then rebuild.
 
 ## Usage
 
@@ -230,4 +230,6 @@ hardware-configuration.nix
 devices/mainPC/           per-device overrides (mounts, LLM paths)
 system/                   NixOS modules (qtile, gpus, Gaming, LLM, general_config)
 home-manager/             user modules (zsh, tmux, nvim, vscode)
+theme/                    all looks: palettes, wallpapers, GRUB themes,
+                          celltower, lucid — see theme/README.md
 ```

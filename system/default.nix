@@ -6,9 +6,9 @@
     ./gpus
     ./LLM
     ./Gaming
-    ./grub
-    ./lucid
-    ./celltower
+    ../theme/grub
+    ../theme/lucid
+    ../theme/celltower
   ];
 
   # config.system.zsh.enable = true;
