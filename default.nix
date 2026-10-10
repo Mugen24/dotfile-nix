@@ -4,7 +4,7 @@
   config.system.qtile_mod = {
     enable = true;
     monitors_list = 2;
-    background = ./system/tiling_manager/wallpapers/neon_shallows.png;
+    background = config.system.grub_theme.wallpaper;
     theme = {
       primaryLight = "#a22a32";
       primaryDark = "#1e272a";

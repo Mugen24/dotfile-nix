@@ -37,17 +37,28 @@ in
       default = "1440p";
       description = "Theme profile matching your monitor resolution.";
     };
-  };
-
-  config = lib.mkIf cfg.enable {
-    boot.loader.systemd-boot.enable = lib.mkForce false;
-    boot.loader.grub = {
-      enable = true;
-      efiSupport = true;
-      device = "nodev";
-      configurationLimit = 10;
-      gfxmodeEfi = resolutions.${cfg.resolution};
-      theme = ./themes + "/${cfg.theme}/${cfg.resolution}";
+    wallpaper = lib.mkOption {
+      type = lib.types.path;
+      readOnly = true;
+      description = "4K wallpaper matching the selected theme, from ./wallpapers. Reference this from other modules (e.g. qtile background) to keep the desktop in sync with the boot theme.";
     };
   };
+
+  config = lib.mkMerge [
+    {
+      system.grub_theme.wallpaper = ./wallpapers + "/${cfg.theme}.png";
+    }
+
+    (lib.mkIf cfg.enable {
+      boot.loader.systemd-boot.enable = lib.mkForce false;
+      boot.loader.grub = {
+        enable = true;
+        efiSupport = true;
+        device = "nodev";
+        configurationLimit = 10;
+        gfxmodeEfi = resolutions.${cfg.resolution};
+        theme = ./themes + "/${cfg.theme}/${cfg.resolution}";
+      };
+    })
+  ];
 }

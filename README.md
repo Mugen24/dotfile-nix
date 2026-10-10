@@ -68,6 +68,26 @@ config.system.qtile_mod = {
 
 The qtile module (`system/tiling_manager/qtile/default.nix`) writes these values to `/etc/xdg/qtile/config.json` and the wallpaper to `/etc/xdg/qtile/background`, which `config.py` and `widgets.py` read at runtime. Any wallpaper path and any hex palette works. Editor/terminal themes live with their modules: `home-manager/nvim/theme.nix` (dracula) and the tmux module (tokyo-night).
 
+### Boot theme (GRUB) and matching wallpapers
+
+`system/grub/` vendors 8 Evangelion GRUB themes (each in 720p/1080p/1440p) plus their matching 4K wallpapers. One option switches both the boot menu and the desktop wallpaper:
+
+```nix
+# default.nix (root)
+config.system.grub_theme = {
+  enable = true;
+  theme = "soryu";       # ayanami | eva01 | eva02 | penpen | ramiel | seele | soryu | wunder
+  resolution = "1440p";  # 720p | 1080p | 1440p
+};
+
+# qtile wallpaper follows the boot theme automatically:
+config.system.qtile_mod.background = config.system.grub_theme.wallpaper;
+```
+
+`system.grub_theme.wallpaper` is a read-only option pointing at `system/grub/wallpapers/<theme>.png` — reference it anywhere you want the wallpaper, or point `qtile_mod.background` at any other path to decouple them. Enabling the module also switches the bootloader from systemd-boot to GRUB automatically (and back when disabled).
+
+To add a new GRUB theme later: drop its directory into `system/grub/themes/<name>/<resolution>/` (with a `theme.txt`), add `<name>` to `availableThemes` in `system/grub/default.nix`, and optionally add a matching `system/grub/wallpapers/<name>.png`. Extra wallpapers you just want to pick from can go straight into `system/grub/wallpapers/` (or `system/tiling_manager/wallpapers/`) with no module changes.
+
 ## Usage
 
 Full NixOS:
