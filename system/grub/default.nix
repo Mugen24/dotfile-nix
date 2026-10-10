@@ -23,6 +23,11 @@ let
     "1080p" = "1920x1080";
     "1440p" = "2560x1440";
   };
+  themeDir = ./themes + "/${cfg.theme}/${cfg.resolution}";
+  # These themes draw their menu with a native GRUB module
+  # (modules/*/evangelion_cards.mod) instead of a standard boot_menu
+  # component; without insmod + cards.cfg the menu entries never render.
+  hasNativeCards = builtins.pathExists (themeDir + "/cards.cfg");
 in
 {
   options.system.grub_theme = {
@@ -57,7 +62,25 @@ in
         device = "nodev";
         configurationLimit = 10;
         gfxmodeEfi = resolutions.${cfg.resolution};
-        theme = ./themes + "/${cfg.theme}/${cfg.resolution}";
+        theme = themeDir;
+        # NixOS copies the theme to /boot/grub/theme. Mirrors what the
+        # upstream installer injects: load the native card viewer and its
+        # config, falling back to the console menu (all entries visible)
+        # if it doesn't load.
+        extraConfig = lib.mkIf hasNativeCards ''
+          unset evangelion_cards_ready
+          if [ -f "$prefix/theme/modules/$grub_cpu-$grub_platform/evangelion_cards.mod" ]; then
+            insmod "$prefix/theme/modules/$grub_cpu-$grub_platform/evangelion_cards.mod"
+            source "$prefix/theme/cards.cfg"
+            if [ "$evangelion_cards_ready" != 1 ]; then
+              unset theme
+              terminal_output console
+            fi
+          else
+            unset theme
+            terminal_output console
+          fi
+        '';
       };
     })
   ];

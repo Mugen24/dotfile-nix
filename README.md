@@ -93,7 +93,7 @@ The qtile module (`system/tiling_manager/qtile/default.nix`) writes these values
 
 ### Boot theme (GRUB) and matching wallpapers
 
-`system/grub/` vendors 8 Evangelion GRUB themes (each in 720p/1080p/1440p) plus their matching 4K wallpapers. One option switches both the boot menu and the desktop wallpaper:
+`system/grub/` vendors 8 Evangelion GRUB themes (each in 720p/1080p/1440p) plus their matching 4K wallpapers:
 
 ```nix
 # default.nix (root)
@@ -102,12 +102,15 @@ config.system.grub_theme = {
   theme = "soryu";       # ayanami | eva01 | eva02 | penpen | ramiel | seele | soryu | wunder
   resolution = "1440p";  # 720p | 1080p | 1440p
 };
-
-# qtile wallpaper follows the boot theme automatically:
-config.system.qtile_mod.background = config.system.grub_theme.wallpaper;
 ```
 
-`system.grub_theme.wallpaper` is a read-only option pointing at `system/grub/wallpapers/<theme>.png` — reference it anywhere you want the wallpaper, or point `qtile_mod.background` at any other path to decouple them. Enabling the module also switches the bootloader from systemd-boot to GRUB automatically (and back when disabled).
+Enabling the module switches the bootloader from systemd-boot to GRUB automatically (and back when disabled). These themes draw their menu with a bundled native GRUB module instead of a standard menu widget; the module detects the theme's `cards.cfg` and emits the matching `insmod`/`source` lines into `grub.cfg` itself, with a fallback to the plain console menu if the module fails to load. Rollback generations live in the "NixOS - All Configurations" submenu entry.
+
+The desktop wallpaper is configured separately (`qtile_mod.background`) — it does not follow the boot theme. If you ever want them in sync, `system.grub_theme.wallpaper` is a read-only option pointing at `system/grub/wallpapers/<theme>.png`:
+
+```nix
+config.system.qtile_mod.background = config.system.grub_theme.wallpaper;
+```
 
 To add a new GRUB theme later: drop its directory into `system/grub/themes/<name>/<resolution>/` (with a `theme.txt`), add `<name>` to `availableThemes` in `system/grub/default.nix`, and optionally add a matching `system/grub/wallpapers/<name>.png`. Extra wallpapers you just want to pick from can go straight into `system/grub/wallpapers/` (or `system/tiling_manager/wallpapers/`) with no module changes.
 
