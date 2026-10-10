@@ -68,9 +68,10 @@ All `system.qtile_mod` options:
 | Option          | Type          | Default   | Values / notes                                                                                          |
 | --------------- | ------------- | --------- | ------------------------------------------------------------------------------------------------------- |
 | `enable`        | bool          | `false`   | Installs qtile + picom + rofi                                                                            |
-| `palette`       | enum          | `custom`  | `custom`, `evangelion` (the original red/green theme), `catppuccin-mocha`, `gruvbox`, `nightfox`, `nord`, `pywal`, `tokyo-night` (vendored from [Lucid](https://github.com/Sn3akyy1/lucid)) |
+| `palette`       | enum          | `custom`  | `custom`, `evangelion` (the original red/green theme), `celltower` (light cream/terracotta), `catppuccin-mocha`, `gruvbox`, `nightfox`, `nord`, `pywal`, `tokyo-night` (the last six vendored from [Lucid](https://github.com/Sn3akyy1/lucid)) |
 | `monitors_list` | enum `[1 2]`  | `2`       | Bar/widget layout for 1 or 2 monitors                                                                    |
 | `background`    | path          | —         | Wallpaper image, written to `/etc/xdg/qtile/background`                                                  |
+| `terminal`      | str           | `kitty`   | Terminal command spawned by the keybinds, written to `config.json` and read by `config.py`               |
 | `theme.*`       | str (hex)     | evangelion colours | `primaryLight`, `primaryDark`, `secondaryLight`, `secondaryDark`, `neutral` — any value set overrides the selected palette |
 
 With `palette = "custom"` the explicit theme block is used instead:
@@ -112,6 +113,26 @@ The desktop wallpaper is configured separately (`qtile_mod.background`) — it d
 ```nix
 config.system.qtile_mod.background = config.system.grub_theme.wallpaper;
 ```
+
+### Cell Tower look (qtile/X11)
+
+`system/celltower/` vendors the [Cell Tower](https://gitlab.com/dejan-z/xfce-stuff/-/tree/main/Cell%20Tower) GTK theme and its 4K wallpaper. No XFCE session is installed — only the standalone apps.
+
+```nix
+# default.nix (root)
+config.system.celltower.enable = true;
+```
+
+While enabled it sets, with higher priority than your explicit `qtile_mod` settings (they return when you disable it):
+
+- `qtile_mod.palette = "celltower"` — bar colours mapped from the GTK theme's palette
+- `qtile_mod.background` — the Cell Tower 4K wallpaper
+- `qtile_mod.terminal = "xfce4-terminal"` — qtile's `SUPER+Return` spawns it
+- GTK 2/3 theme "Cell Tower", font "GohuFont 11 Nerd Font" (`nerd-fonts.gohufont`), plus `xfce4-terminal`, `thunar` and `ranger` packages
+
+The icon pack from the original dotfiles is not vendored (opendesktop.org blocks automated downloads). To add it: download it, expose it as a package with `share/icons/<name>/`, and set `system.celltower.iconTheme = { name = "<name>"; package = <pkg>; };`.
+
+Note: the theme ships GTK 2/3 assets only, so GTK 4 apps (e.g. nautilus) keep their default look.
 
 To add a new GRUB theme later: drop its directory into `system/grub/themes/<name>/<resolution>/` (with a `theme.txt`), add `<name>` to `availableThemes` in `system/grub/default.nix`, and optionally add a matching `system/grub/wallpapers/<name>.png`. Extra wallpapers you just want to pick from can go straight into `system/grub/wallpapers/` (or `system/tiling_manager/wallpapers/`) with no module changes.
 

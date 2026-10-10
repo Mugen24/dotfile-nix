@@ -33,4 +33,7 @@
     theme = "gruvbox";
     mode = "dark";
   };
+
+  # Cell Tower look for qtile/X11 (GTK theme, wallpaper, xfce4-terminal, thunar)
+  config.system.celltower.enable = true;
 }

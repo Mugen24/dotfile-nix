@@ -31,6 +31,7 @@ let
   # "evangelion" is the original custom theme (https://coolors.co/1e272a-a22a32-24e189-4b2327-312730).
   paletteNames = [
     "evangelion"
+    "celltower"
     "catppuccin-mocha"
     "gruvbox"
     "nightfox"
@@ -70,6 +71,11 @@ in
     background = mkOption {
       type = types.path;
       description = "Background path";
+    };
+    terminal = mkOption {
+      type = types.str;
+      default = "kitty";
+      description = "Terminal emulator command spawned by the keybinds.";
     };
     theme.primaryLight = mkOption {
       type = types.str;
@@ -137,6 +143,7 @@ in
       etc."xdg/qtile/config.json" = {
         text = builtins.toJSON {
             monitors_list = config.system.qtile_mod.monitors_list;
+            terminal = config.system.qtile_mod.terminal;
             primaryLight = config.system.qtile_mod.theme.primaryLight;
             primaryDark = config.system.qtile_mod.theme.primaryDark;
             secondaryLight = config.system.qtile_mod.theme.secondaryLight;

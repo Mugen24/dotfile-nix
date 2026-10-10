@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=GTK Theme
+Name=Cell Tower
+Comment=Cell Tower Lightcolored theme.
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+Name=Cell Tower
+GtkTheme=Cell Tower
+

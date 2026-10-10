@@ -42,7 +42,7 @@ from widgets import screens, setgroup
 
 mod = "mod4"
 # terminal = guess_terminal()
-terminal = "kitty"
+terminal = TERMINAL
 
 @lazy.function
 def smart_right(qtile):

@@ -8,6 +8,7 @@
     ./Gaming
     ./grub
     ./lucid
+    ./celltower
   ];
 
   # config.system.zsh.enable = true;

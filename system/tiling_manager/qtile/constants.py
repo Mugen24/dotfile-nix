@@ -5,12 +5,14 @@ PROJECT_ROOT = Path("/etc/xdg/qtile")
 WALLPAPER = PROJECT_ROOT / "background"
 CONFIG_PATH = PROJECT_ROOT / "config.json"
 SCHEMA = {}
+TERMINAL = "kitty"
 try: 
     # monitors_list: ${config.system.qtile_mod.monitors_list}
     with CONFIG_PATH.open() as fp:
         config = json.load(fp)
 
     MONITORS: int = int(config["monitors_list"])
+    TERMINAL = config.get("terminal", "kitty")
     SCHEMA = {
         "primaryLight": config["primaryLight"],
         "primaryDark": config["primaryDark"],
