@@ -80,6 +80,13 @@ def pulse_volume(**kargs):
         **kargs
     )
 
+def music(**kargs):
+    return widget.Mpris2(
+        foreground = neutral,
+        format = "󰎆  {xesam:title} - {xesam:artist}",
+        **kargs
+    )
+
 def bluetooth(**kargs):
     return widget.Bluetooth(
         foreground = neutral,
@@ -127,6 +134,12 @@ def main_widget():
         group(),
 
         widget.Spacer(
+        ),
+
+        music(**rounded_border(secondaryLight), padding=10),
+
+        widget.Spacer(
+            length=10
         ),
 
         net(**rounded_border(secondaryLight, left_round), padding=10),

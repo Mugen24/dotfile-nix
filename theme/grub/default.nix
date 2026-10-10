@@ -4,6 +4,7 @@
 {
   config,
   lib,
+  pkgs-unstable,
   ...
 }:
 let
@@ -55,6 +56,16 @@ in
     }
 
     (lib.mkIf cfg.enable {
+      # The Evangelion card menu module is a compiled .mod built against
+      # GRUB 2.14; nixos-25.11 ships 2.12, whose insmod rejects it (module
+      # ABI mismatch) and the menu falls back to the plain console — no
+      # theme. Pin GRUB to the same 2.14 build the module was tested with.
+      nixpkgs.overlays = [
+        (_final: _prev: {
+          grub2 = pkgs-unstable.grub2;
+        })
+      ];
+
       boot.loader.systemd-boot.enable = lib.mkForce false;
       boot.loader.grub = {
         enable = true;

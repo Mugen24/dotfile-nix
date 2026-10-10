@@ -135,6 +135,7 @@ in
       extraPackages = python3Packages: with python3Packages; [
         qtile-extras
         pulsectl-asyncio
+        dbus-next # for the Mpris2 music widget
       ];
     };
 

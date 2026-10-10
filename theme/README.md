@@ -21,20 +21,28 @@ Each file holds five Material You roles that map onto the qtile theme slots
 `secondaryLight`, `surface_container_high` → `secondaryDark`,
 `surface_variant` → `neutral`).
 
-| Palette | Look | primary | surface | secondary |
-| --- | --- | --- | --- | --- |
-| `evangelion` | The original custom theme — deep red accents, green highlights, dark blue-grey base | `#a22a32` | `#1e272a` | `#24e189` |
-| `celltower` | Light and warm — terracotta accent on cream, sage-grey surfaces (matches the Cell Tower GTK theme) | `#BD5636` | `#FAF0BB` | `#281C14` |
-| `rumda` | Warm dark brown — copper/tan accents, cosy earthy tones (from [rumda](https://github.com/Nytril-ark/rumda)) | `#c47c4f` | `#2B221A` | `#f2bc88` |
-| `rumda-light` | The light rumda variant — warm cream base, same copper accents | `#c47c4f` | `#F2D5BB` | `#a1694d` |
-| `caelestia` | Cool dark blue-grey with light blue/lavender accents (from [caelestia-dots](https://github.com/caelestia-dots/shell)) | `#9ccbfb` | `#101418` | `#d3bfe6` |
-| `ariealerr` | Muted periwinkle/mauve on deep indigo, derived from the [ariealerr/dots](https://github.com/ariealerr/dots) wallpaper (`wallpapers/ariealerr.png`) | `#738BBB` | `#1F2036` | `#91749D` |
-| `tokyo-night` | Cool dark blue, blue/violet accents | `#7aa2f7` | `#1a1b26` | `#bb9af7` |
-| `gruvbox` | Retro warm dark — aqua and faded pink on brown-grey | `#83a598` | `#282828` | `#d3869b` |
-| `catppuccin-mocha` | Soft pastel blue/lavender on dark purple-grey | `#89b4fa` | `#1e1e2e` | `#cba6f7` |
-| `nord` | Muted arctic teal/blue on blue-grey | `#88c0d0` | `#232831` | `#81a1c1` |
-| `nightfox` | Deep blue-charcoal, blue and cyan accents | `#719cd6` | `#192330` | `#63cdcf` |
-| `pywal` | Muted purple base, cyan/peach accents | `#47D5FB` | `#301e37` | `#F9C9A2` |
+| Palette | Swatch | Look | primary | surface | secondary |
+| --- | --- | --- | --- | --- | --- |
+| `evangelion` | ![evangelion](previews/palette-evangelion.png) | The original custom theme — deep red accents, green highlights, dark blue-grey base | `#a22a32` | `#1e272a` | `#24e189` |
+| `celltower` | ![celltower](previews/palette-celltower.png) | Light and warm — terracotta accent on cream, sage-grey surfaces (matches the Cell Tower GTK theme) | `#BD5636` | `#FAF0BB` | `#281C14` |
+| `rumda` | ![rumda](previews/palette-rumda.png) | Warm dark brown — copper/tan accents, cosy earthy tones (from [rumda](https://github.com/Nytril-ark/rumda); desktop preview below) | `#c47c4f` | `#2B221A` | `#f2bc88` |
+| `rumda-light` | ![rumda-light](previews/palette-rumda-light.png) | The light rumda variant — warm cream base, same copper accents | `#c47c4f` | `#F2D5BB` | `#a1694d` |
+| `caelestia` | ![caelestia](previews/palette-caelestia.png) | Cool dark blue-grey with light blue/lavender accents (from [caelestia-dots](https://github.com/caelestia-dots/shell)) | `#9ccbfb` | `#101418` | `#d3bfe6` |
+| `ariealerr` | ![ariealerr](previews/palette-ariealerr.png) | Muted periwinkle/mauve on deep indigo, derived from the [ariealerr/dots](https://github.com/ariealerr/dots) wallpaper (`wallpapers/ariealerr.png`; preview below) | `#738BBB` | `#1F2036` | `#91749D` |
+| `tokyo-night` | ![tokyo-night](previews/palette-tokyo-night.png) | Cool dark blue, blue/violet accents | `#7aa2f7` | `#1a1b26` | `#bb9af7` |
+| `gruvbox` | ![gruvbox](previews/palette-gruvbox.png) | Retro warm dark — aqua and faded pink on brown-grey | `#83a598` | `#282828` | `#d3869b` |
+| `catppuccin-mocha` | ![catppuccin-mocha](previews/palette-catppuccin-mocha.png) | Soft pastel blue/lavender on dark purple-grey | `#89b4fa` | `#1e1e2e` | `#cba6f7` |
+| `nord` | ![nord](previews/palette-nord.png) | Muted arctic teal/blue on blue-grey | `#88c0d0` | `#232831` | `#81a1c1` |
+| `nightfox` | ![nightfox](previews/palette-nightfox.png) | Deep blue-charcoal, blue and cyan accents | `#719cd6` | `#192330` | `#63cdcf` |
+| `pywal` | ![pywal](previews/palette-pywal.png) | Muted purple base, cyan/peach accents | `#47D5FB` | `#301e37` | `#F9C9A2` |
+
+Swatches read left to right: primary, surface, secondary, surface_container_high, surface_variant.
+
+Desktop previews:
+
+| rumda (dark) | rumda (light) | ariealerr wallpaper |
+| --- | --- | --- |
+| ![rumda desktop](previews/rumda.jpg) | ![rumda light desktop](previews/rumda-light.jpg) | ![ariealerr wallpaper](previews/ariealerr.jpg) |
 
 The active palette also generates a matching **rofi theme** (`~/.config/rofi/qtile-palette.rasi`) — the launcher (`SUPER+D`) follows the palette automatically.
 
@@ -64,16 +72,16 @@ Eight Evangelion themes from
 720p/1080p/1440p, drawn as horizontal NERV-style cards by a bundled native
 GRUB module. Matching 4K wallpapers in `grub/wallpapers/`.
 
-| Theme | Look |
-| --- | --- |
-| `soryu` | Asuka — red/blue NERV card styling |
-| `ayanami` | Rei — pale blue/white |
-| `eva01` | Unit-01 — purple/green |
-| `eva02` | Unit-02 — red/orange |
-| `penpen` | Pen-Pen — playful light card art |
-| `ramiel` | Ramiel — blue geometric octahedron |
-| `seele` | SEELE — monolith / stone tablet motif |
-| `wunder` | Wunder — clean white/blue WILLE styling |
+| Theme | Look | Preview |
+| --- | --- | --- |
+| `soryu` | Asuka — red/blue NERV card styling | ![soryu](previews/grub-soryu.jpg) |
+| `ayanami` | Rei — pale blue/white | ![ayanami](previews/grub-ayanami.jpg) |
+| `eva01` | Unit-01 — purple/green | ![eva01](previews/grub-eva-01.jpg) |
+| `eva02` | Unit-02 — red/orange | ![eva02](previews/grub-eva-02.jpg) |
+| `penpen` | Pen-Pen — playful light card art | ![penpen](previews/grub-pen-pen.jpg) |
+| `ramiel` | Ramiel — blue geometric octahedron | ![ramiel](previews/grub-ramiel.jpg) |
+| `seele` | SEELE — monolith / stone tablet motif | ![seele](previews/grub-seele.jpg) |
+| `wunder` | Wunder — clean white/blue WILLE styling | ![wunder](previews/grub-wunder.jpg) |
 
 ```nix
 config.system.grub_theme = {
@@ -91,6 +99,8 @@ config.system.grub_theme = {
 The full [Cell Tower](https://gitlab.com/dejan-z/xfce-stuff/-/tree/main/Cell%20Tower)
 look for qtile/X11: light cream/terracotta GTK 2/3 theme, 4K wallpaper,
 GohuFont 11 Nerd Font, thunar + ranger. Terminal stays kitty.
+
+![Cell Tower](previews/celltower.jpg)
 
 ```nix
 config.system.celltower.enable = true;
