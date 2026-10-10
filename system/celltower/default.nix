@@ -1,14 +1,14 @@
 # Cell Tower desktop look (X11/qtile side).
 # GTK theme + wallpaper vendored from https://gitlab.com/dejan-z/xfce-stuff
-# (Cell Tower) under ./theme — no XFCE session is installed, only the
-# standalone apps (xfce4-terminal, thunar) and the theme files.
+# (Cell Tower) under ./theme — no XFCE session is installed, only thunar
+# and the theme files; the terminal stays kitty.
 #
 # Options (system.celltower.*):
 #   enable  bool  default false — applies the Cell Tower look:
-#           qtile palette "celltower" + wallpaper + xfce4-terminal
-#           (mkOverride 90: wins over explicit qtile_mod settings while
-#           enabled, your own settings return when disabled), GTK 2/3 theme,
-#           GohuFont 11 Nerd Font, thunar + ranger
+#           qtile palette "celltower" + wallpaper (mkOverride 90: wins over
+#           explicit qtile_mod settings while enabled, your own settings
+#           return when disabled), GTK 2/3 theme, GohuFont 11 Nerd Font,
+#           thunar + ranger
 #   iconTheme.name / iconTheme.package  default null — icon pack wiring,
 #           applied only when both are set
 {
@@ -23,10 +23,6 @@ let
   gtkTheme = pkgs.runCommand "cell-tower-gtk-theme" { } ''
     mkdir -p "$out/share/themes/Cell Tower"
     cp -r ${./theme}/* "$out/share/themes/Cell Tower/"
-  '';
-  terminalrc = pkgs.writeText "terminalrc" ''
-    [Configuration]
-    FontName=GohuFont 11 Nerd Font 11
   '';
 in
 {
@@ -52,11 +48,9 @@ in
     system.qtile_mod = {
       palette = lib.mkOverride 90 "celltower";
       background = lib.mkOverride 90 ./theme/a-cell-tower.png;
-      terminal = lib.mkOverride 90 "xfce4-terminal";
     };
 
     environment.systemPackages = [
-      pkgs.xfce.xfce4-terminal
       pkgs.xfce.thunar
       pkgs.ranger
     ];
@@ -81,15 +75,6 @@ in
             package = cfg.iconTheme.package;
           };
         };
-
-        # xfce4-terminal rewrites this file itself, so seed it writable once
-        home.activation.celltowerTerminal = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          termDir="$HOME/.config/xfce4/terminal"
-          if [ ! -e "$termDir/terminalrc" ]; then
-            mkdir -p "$termDir"
-            cp --no-preserve=mode ${terminalrc} "$termDir/terminalrc"
-          fi
-        '';
       };
   };
 }

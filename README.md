@@ -127,8 +127,9 @@ While enabled it sets, with higher priority than your explicit `qtile_mod` setti
 
 - `qtile_mod.palette = "celltower"` — bar colours mapped from the GTK theme's palette
 - `qtile_mod.background` — the Cell Tower 4K wallpaper
-- `qtile_mod.terminal = "xfce4-terminal"` — qtile's `SUPER+Return` spawns it
-- GTK 2/3 theme "Cell Tower", font "GohuFont 11 Nerd Font" (`nerd-fonts.gohufont`), plus `xfce4-terminal`, `thunar` and `ranger` packages
+- GTK 2/3 theme "Cell Tower", font "GohuFont 11 Nerd Font" (`nerd-fonts.gohufont`), plus `thunar` and `ranger` packages
+
+The terminal stays kitty everywhere (qtile and Lucid).
 
 The icon pack from the original dotfiles is not vendored (opendesktop.org blocks automated downloads). To add it: download it, expose it as a package with `share/icons/<name>/`, and set `system.celltower.iconTheme = { name = "<name>"; package = <pkg>; };`.
 
