@@ -7,6 +7,7 @@
     ./LLM
     ./Gaming
     ./grub
+    ./lucid
   ];
 
   # config.system.zsh.enable = true;

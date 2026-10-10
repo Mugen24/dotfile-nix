@@ -25,4 +25,12 @@
     theme = "soryu";
     resolution = "1440p";
   };
+
+  # Hyprland session with the Lucid shell (qtile stays installed; pick the
+  # session at the GDM login screen)
+  config.system.lucid = {
+    enable = true;
+    theme = "gruvbox";
+    mode = "dark";
+  };
 }

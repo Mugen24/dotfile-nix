@@ -30,6 +30,7 @@ Every module defines its own `enable` option and is inert until switched on. You
 | `system.LLM.ollama`     | Ollama with a configurable model storage path  |
 | `extra_keybinds`        | System-wide key remapping (xremap)             |
 | `system.grub_theme`     | GRUB boot menu with a vendored Evangelion theme (switches the bootloader from systemd-boot to GRUB; pick `theme` from `system/grub/themes/` — ayanami, eva01, eva02, penpen, ramiel, seele, soryu, wunder — and a `resolution` of 720p/1080p/1440p) |
+| `system.lucid`          | Hyprland session with the vendored [Lucid](https://github.com/Sn3akyy1/lucid) desktop shell (bar, dock, widgets, lock screen). Adds a session at the GDM login screen — qtile stays installed. Options: `theme` (matugen \| catppuccin-mocha \| gruvbox \| nightfox \| nord \| pywal \| tokyo-night, or a custom theme dropped into `~/.config/lucid/themes/`) and `mode` (dark \| light). Switching `theme` live-reloads the shell on rebuild |
 
 **User-level modules** (`home-manager/`) — toggled in the root `default-home-manager.nix`:
 
@@ -113,6 +114,29 @@ config.system.qtile_mod.background = config.system.grub_theme.wallpaper;
 ```
 
 To add a new GRUB theme later: drop its directory into `system/grub/themes/<name>/<resolution>/` (with a `theme.txt`), add `<name>` to `availableThemes` in `system/grub/default.nix`, and optionally add a matching `system/grub/wallpapers/<name>.png`. Extra wallpapers you just want to pick from can go straight into `system/grub/wallpapers/` (or `system/tiling_manager/wallpapers/`) with no module changes.
+
+### Lucid shell (Hyprland session)
+
+`system/lucid/` vendors the full [Lucid](https://github.com/Sn3akyy1/lucid) desktop shell (Quickshell bar, dock/launcher, widgets, lock screen) minus its ~180MB wallpaper pack. Enabling `system.lucid` adds a **Hyprland** entry to the GDM login screen — qtile is untouched, so you can move between the two per login.
+
+```nix
+# default.nix (root)
+config.system.lucid = {
+  enable = true;
+  theme = "gruvbox";  # matugen | catppuccin-mocha | gruvbox | nightfox | nord | pywal | tokyo-night
+  mode = "dark";      # dark | light
+};
+```
+
+How it's wired:
+
+- Hyprland and Quickshell come from `nixpkgs-unstable` (Lucid's `hyprland.lua` config needs Hyprland ≥ 0.55).
+- `~/.config/quickshell` is a read-only link to the vendored shell; `~/.config/hypr` is refreshed from the vendored Lua config on every activation.
+- `~/.config/lucid` (scripts, palettes, state) is **seeded once, then writable** — the shell's own settings edits survive rebuilds. Deleting a file there re-seeds it on the next switch.
+- `theme`/`mode` are written to `~/.cache/current_theme` / `~/.cache/current_mode` on every activation, and the shell live-reloads on the change — so switching theme = edit `default.nix`, rebuild. Runtime theme picks inside the shell are overridden by the next rebuild.
+- The wallpaper picker (`SUPER+B`) is pre-pointed at `system/grub/wallpapers/`. Lucid's own ~180MB wallpaper pack is not vendored; drop images into `~/Pictures/wallpapers/` or change `wallpaperFolder` in the shell settings.
+- Custom themes: drop `<name>/quickshell.json` into `~/.config/lucid/themes/` and set `system.lucid.theme = "<name>"`.
+- To update the vendored shell: clone the Lucid repo and `rsync -a --delete --exclude=.git --exclude=wallpapers lucid/ system/lucid/shell/`, then rebuild.
 
 ## Usage
 
