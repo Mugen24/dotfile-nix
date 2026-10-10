@@ -8,6 +8,7 @@
 #                  "custom" uses the theme.* values below; a named value loads
 #                  ../../../theme/palettes/<name>.json (Material You roles from Lucid,
 #                  https://github.com/Sn3akyy1/lucid) mapped onto the theme slots.
+#   terminal       str                     default "kitty" — spawned by keybinds
 #   monitors_list  enum [1 2]              default 2      — bars/widgets layout
 #   background     path                                 — wallpaper image
 #   theme.*        str (hex colour)                     — primaryLight, primaryDark,
@@ -16,10 +17,13 @@
 #
 # Colours are written to /etc/xdg/qtile/config.json, the wallpaper to
 # /etc/xdg/qtile/background; config.py/widgets.py read them at runtime.
+# The active palette also generates a matching rofi theme
+# (~/.config/rofi/qtile-palette.rasi).
 {
   pkgs,
   lib,
   config,
+  globals,
   ...
 }:
 with lib;
@@ -32,6 +36,10 @@ let
   paletteNames = [
     "evangelion"
     "celltower"
+    "rumda"
+    "rumda-light"
+    "caelestia"
+    "ariealerr"
     "catppuccin-mocha"
     "gruvbox"
     "nightfox"
@@ -149,9 +157,52 @@ in
             secondaryLight = config.system.qtile_mod.theme.secondaryLight;
             secondaryDark = config.system.qtile_mod.theme.secondaryDark;
             neutral = config.system.qtile_mod.theme.neutral;
-            # link: "https://coolors.co/1e272a-a22a32-24e189-4b2327-312730"
         };
       };
+    };
+
+    # rofi follows the active palette
+    home-manager.users.${globals.user} = {
+      xdg.configFile."rofi/config.rasi".text = ''
+        @theme "qtile-palette"
+      '';
+      xdg.configFile."rofi/qtile-palette.rasi".text = with cfg.theme; ''
+        * {
+            background-color: transparent;
+            text-color: ${secondaryLight};
+        }
+        window {
+            background-color: ${primaryDark};
+            border: 2px;
+            border-color: ${primaryLight};
+            border-radius: 12px;
+            width: 640px;
+            padding: 16px;
+        }
+        inputbar {
+            background-color: ${secondaryDark};
+            border-radius: 8px;
+            padding: 8px 12px;
+            spacing: 8px;
+            children: [ prompt, entry ];
+        }
+        prompt { text-color: ${primaryLight}; }
+        entry { placeholder-color: ${neutral}; }
+        listview {
+            lines: 8;
+            spacing: 4px;
+            margin: 12px 0 0 0;
+        }
+        element {
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+        element selected {
+            background-color: ${primaryLight};
+            text-color: ${primaryDark};
+        }
+        element-icon { size: 24px; }
+      '';
     };
   })
   ];

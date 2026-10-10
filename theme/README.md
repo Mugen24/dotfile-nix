@@ -25,12 +25,18 @@ Each file holds five Material You roles that map onto the qtile theme slots
 | --- | --- | --- | --- | --- |
 | `evangelion` | The original custom theme — deep red accents, green highlights, dark blue-grey base | `#a22a32` | `#1e272a` | `#24e189` |
 | `celltower` | Light and warm — terracotta accent on cream, sage-grey surfaces (matches the Cell Tower GTK theme) | `#BD5636` | `#FAF0BB` | `#281C14` |
+| `rumda` | Warm dark brown — copper/tan accents, cosy earthy tones (from [rumda](https://github.com/Nytril-ark/rumda)) | `#c47c4f` | `#2B221A` | `#f2bc88` |
+| `rumda-light` | The light rumda variant — warm cream base, same copper accents | `#c47c4f` | `#F2D5BB` | `#a1694d` |
+| `caelestia` | Cool dark blue-grey with light blue/lavender accents (from [caelestia-dots](https://github.com/caelestia-dots/shell)) | `#9ccbfb` | `#101418` | `#d3bfe6` |
+| `ariealerr` | Muted periwinkle/mauve on deep indigo, derived from the [ariealerr/dots](https://github.com/ariealerr/dots) wallpaper (`wallpapers/ariealerr.png`) | `#738BBB` | `#1F2036` | `#91749D` |
 | `tokyo-night` | Cool dark blue, blue/violet accents | `#7aa2f7` | `#1a1b26` | `#bb9af7` |
 | `gruvbox` | Retro warm dark — aqua and faded pink on brown-grey | `#83a598` | `#282828` | `#d3869b` |
 | `catppuccin-mocha` | Soft pastel blue/lavender on dark purple-grey | `#89b4fa` | `#1e1e2e` | `#cba6f7` |
 | `nord` | Muted arctic teal/blue on blue-grey | `#88c0d0` | `#232831` | `#81a1c1` |
 | `nightfox` | Deep blue-charcoal, blue and cyan accents | `#719cd6` | `#192330` | `#63cdcf` |
 | `pywal` | Muted purple base, cyan/peach accents | `#47D5FB` | `#301e37` | `#F9C9A2` |
+
+The active palette also generates a matching **rofi theme** (`~/.config/rofi/qtile-palette.rasi`) — the launcher (`SUPER+D`) follows the palette automatically.
 
 Set it in the root `default.nix`:
 
