@@ -25,10 +25,10 @@ Each file holds five Material You roles that map onto the qtile theme slots
 | --- | --- | --- | --- | --- | --- |
 | `evangelion` | ![evangelion](previews/palette-evangelion.png) | The original custom theme — deep red accents, green highlights, dark blue-grey base | `#a22a32` | `#1e272a` | `#24e189` |
 | `celltower` | ![celltower](previews/palette-celltower.png) | Light and warm — terracotta accent on cream, sage-grey surfaces (matches the Cell Tower GTK theme) | `#BD5636` | `#FAF0BB` | `#281C14` |
-| `rumda` | ![rumda](previews/palette-rumda.png) | Warm dark brown — copper/tan accents, cosy earthy tones (from [rumda](https://github.com/Nytril-ark/rumda); desktop preview below) | `#c47c4f` | `#2B221A` | `#f2bc88` |
+| `rumda` | ![rumda](previews/palette-rumda.png) | Warm dark brown — copper/tan accents, cosy earthy tones (from [rumda](https://github.com/Nytril-ark/rumda); desktop preview below, bar layout available as `bar_style = "rumda"`) | `#c47c4f` | `#2B221A` | `#f2bc88` |
 | `rumda-light` | ![rumda-light](previews/palette-rumda-light.png) | The light rumda variant — warm cream base, same copper accents | `#c47c4f` | `#F2D5BB` | `#a1694d` |
-| `caelestia` | ![caelestia](previews/palette-caelestia.png) | Cool dark blue-grey with light blue/lavender accents (from [caelestia-dots](https://github.com/caelestia-dots/shell)) | `#9ccbfb` | `#101418` | `#d3bfe6` |
-| `ariealerr` | ![ariealerr](previews/palette-ariealerr.png) | Muted periwinkle/mauve on deep indigo, derived from the [ariealerr/dots](https://github.com/ariealerr/dots) wallpaper (`wallpapers/ariealerr.png`; preview below) | `#738BBB` | `#1F2036` | `#91749D` |
+| `caelestia` | ![caelestia](previews/palette-caelestia.png) | Cool dark blue-grey with light blue/lavender accents (from [caelestia-dots](https://github.com/caelestia-dots/shell); its bar layout is available as `bar_style = "caelestia"`) | `#9ccbfb` | `#101418` | `#d3bfe6` |
+| `ariealerr` | ![ariealerr](previews/palette-ariealerr.png) | Muted periwinkle/mauve on deep indigo, derived from the [ariealerr/dots](https://github.com/ariealerr/dots) wallpaper (`wallpapers/ariealerr.png`; preview below — the repo contains no bar config, so only the palette + wallpaper exist) | `#738BBB` | `#1F2036` | `#91749D` |
 | `tokyo-night` | ![tokyo-night](previews/palette-tokyo-night.png) | Cool dark blue, blue/violet accents | `#7aa2f7` | `#1a1b26` | `#bb9af7` |
 | `gruvbox` | ![gruvbox](previews/palette-gruvbox.png) | Retro warm dark — aqua and faded pink on brown-grey | `#83a598` | `#282828` | `#d3869b` |
 | `catppuccin-mocha` | ![catppuccin-mocha](previews/palette-catppuccin-mocha.png) | Soft pastel blue/lavender on dark purple-grey | `#89b4fa` | `#1e1e2e` | `#cba6f7` |
@@ -45,6 +45,21 @@ Desktop previews:
 | ![rumda desktop](previews/rumda.jpg) | ![rumda light desktop](previews/rumda-light.jpg) | ![ariealerr wallpaper](previews/ariealerr.jpg) |
 
 The active palette also generates a matching **rofi theme** (`~/.config/rofi/qtile-palette.rasi`) — the launcher (`SUPER+D`) follows the palette automatically.
+
+### Bar styles
+
+The bar layout can follow the linked dotfiles themes too, independently of the
+palette — every style keeps your widgets, keybinds, and terminal:
+
+```nix
+config.system.qtile_mod.bar_style = "caelestia"; # default | caelestia | rumda
+```
+
+- `default` — your current layout: tray + workspaces left, net/memory/cpu and bluetooth/volume right, clock last
+- `caelestia` — workspaces and a media chip on the left, cpu/memory/net cluster, then tray, volume and clock on the right
+- `rumda` — media beside the workspaces, generously spaced single modules, clock and tray at the far right
+
+To add a style: add a `name_widget()` function in `system/tiling_manager/qtile/widgets.py`, register it in `BAR_WIDGETS`, and add the name to `bar_style`'s enum in `system/tiling_manager/qtile/default.nix`.
 
 Set it in the root `default.nix`:
 

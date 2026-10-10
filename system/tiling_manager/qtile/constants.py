@@ -6,6 +6,7 @@ WALLPAPER = PROJECT_ROOT / "background"
 CONFIG_PATH = PROJECT_ROOT / "config.json"
 SCHEMA = {}
 TERMINAL = "kitty"
+BAR_STYLE = "default"
 try: 
     # monitors_list: ${config.system.qtile_mod.monitors_list}
     with CONFIG_PATH.open() as fp:
@@ -13,6 +14,7 @@ try:
 
     MONITORS: int = int(config["monitors_list"])
     TERMINAL = config.get("terminal", "kitty")
+    BAR_STYLE = config.get("bar_style", "default")
     SCHEMA = {
         "primaryLight": config["primaryLight"],
         "primaryDark": config["primaryDark"],

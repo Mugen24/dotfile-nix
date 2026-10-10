@@ -72,6 +72,7 @@ All `system.qtile_mod` options:
 | `monitors_list` | enum `[1 2]`  | `2`       | Bar/widget layout for 1 or 2 monitors                                                                    |
 | `background`    | path          | —         | Wallpaper image, written to `/etc/xdg/qtile/background`                                                  |
 | `terminal`      | str           | `kitty`   | Terminal command spawned by the keybinds, written to `config.json` and read by `config.py`               |
+| `bar_style`     | enum          | `default` | Bar layout: `default` (tray + workspaces left, stats + volume right), `caelestia` (workspaces + media chip left, system cluster and tray right), `rumda` (media beside workspaces, spaced modules, tray far right) |
 | `theme.*`       | str (hex)     | evangelion colours | `primaryLight`, `primaryDark`, `secondaryLight`, `secondaryDark`, `neutral` — any value set overrides the selected palette |
 
 With `palette = "custom"` the explicit theme block is used instead:

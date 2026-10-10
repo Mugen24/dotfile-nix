@@ -127,6 +127,8 @@ def systray(**kargs):
 left_round = [10, 0, 0, 10]
 right_round = [0, 10, 10, 0]
 
+# Bar layouts styled after the linked dotfiles themes; the active palette
+# still supplies the colours, and the widget factories are shared.
 def main_widget():
     return [
         systray(),
@@ -169,6 +171,68 @@ def main_widget():
         clock(**rounded_border(neutral)),
     ]
 
+
+def caelestia_widget():
+    # caelestia-dots: workspaces left, media chip beside them, system
+    # cluster right, tray tucked before the clock
+    return [
+        group(),
+        widget.Spacer(length=10),
+
+        music(**rounded_border(primaryLight), padding=10),
+
+        widget.Spacer(),
+
+        cpu(**rounded_border(secondaryLight, left_round), padding=10),
+        memory(**rounded_border(secondaryLight, [0,0,0,0]), padding=10),
+        net(**rounded_border(secondaryLight, right_round), padding=10),
+
+        widget.Spacer(length=10),
+
+        systray(),
+
+        widget.Spacer(length=10),
+
+        pulse_volume(**rounded_border(primaryLight, left_round), padding=10),
+        widget.Spacer(length=2, background=primaryLight),
+        widget.Sep(text="|", background=primaryLight, foreground=neutral),
+        widget.Spacer(length=6, background=primaryLight),
+        clock(**rounded_border(primaryLight, right_round)),
+    ]
+
+
+def rumda_widget():
+    # rumda: media beside the workspaces, generously spaced modules,
+    # clock and tray at the far right
+    return [
+        group(),
+        widget.Spacer(length=10),
+
+        music(**rounded_border(neutral), padding=10),
+
+        widget.Spacer(),
+
+        bluetooth(**rounded_border(secondaryLight), padding=10),
+        widget.Spacer(length=10),
+
+        net(**rounded_border(secondaryLight), padding=10),
+        widget.Spacer(length=10),
+
+        pulse_volume(**rounded_border(primaryLight), padding=10),
+        widget.Spacer(length=10),
+
+        clock(**rounded_border(primaryLight)),
+        widget.Spacer(length=10),
+
+        systray(),
+    ]
+
+
+BAR_WIDGETS = {
+    "default": main_widget,
+    "caelestia": caelestia_widget,
+    "rumda": rumda_widget,
+}.get(BAR_STYLE, main_widget)()
 
 def secondary_widget():
 
@@ -217,7 +281,7 @@ screens = [
     Screen(
         wallpaper=WALLPAPER,
         wallpaper_mode='fill',
-        bottom=bar.Bar(main_widget(), 30, background=f"{transparent}", margin=5)
+        bottom=bar.Bar(BAR_WIDGETS, 30, background=f"{transparent}", margin=5)
      # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
      # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
     )

@@ -85,6 +85,20 @@ in
       default = "kitty";
       description = "Terminal emulator command spawned by the keybinds.";
     };
+    bar_style = mkOption {
+      type = types.enum [
+        "default"
+        "caelestia"
+        "rumda"
+      ];
+      default = "default";
+      description = ''
+        Bar layout, styled after the linked dotfiles themes:
+        "default" (current layout), "caelestia" (workspaces + media chip,
+        system cluster right), "rumda" (media beside workspaces, spaced
+        modules, tray at the far right).
+      '';
+    };
     theme.primaryLight = mkOption {
       type = types.str;
       description = ''RGB values of primaryLight. Ex: #a22a32'';
@@ -153,6 +167,7 @@ in
         text = builtins.toJSON {
             monitors_list = config.system.qtile_mod.monitors_list;
             terminal = config.system.qtile_mod.terminal;
+            bar_style = config.system.qtile_mod.bar_style;
             primaryLight = config.system.qtile_mod.theme.primaryLight;
             primaryDark = config.system.qtile_mod.theme.primaryDark;
             secondaryLight = config.system.qtile_mod.theme.secondaryLight;
