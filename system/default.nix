@@ -6,6 +6,7 @@
     ./gpus
     ./LLM
     ./Gaming
+    ./grub
   ];
 
   # config.system.zsh.enable = true;

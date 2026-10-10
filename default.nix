@@ -22,4 +22,10 @@
     enableVR = true;
   };
   config.extra_keybinds.enable = true;
+
+  config.system.grub_theme = {
+    enable = true;
+    theme = "soryu";
+    resolution = "1440p";
+  };
 }

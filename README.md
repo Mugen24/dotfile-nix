@@ -29,6 +29,7 @@ Every module defines its own `enable` option and is inert until switched on. You
 | `gaming` (+ `enableVR`) | Steam/gaming stack, VR support                 |
 | `system.LLM.ollama`     | Ollama with a configurable model storage path  |
 | `extra_keybinds`        | System-wide key remapping (xremap)             |
+| `system.grub_theme`     | GRUB boot menu with a vendored Evangelion theme (switches the bootloader from systemd-boot to GRUB; pick `theme` from `system/grub/themes/` — ayanami, eva01, eva02, penpen, ramiel, seele, soryu, wunder — and a `resolution` of 720p/1080p/1440p) |
 
 **User-level modules** (`home-manager/`) — toggled in the root `default-home-manager.nix`:
 
