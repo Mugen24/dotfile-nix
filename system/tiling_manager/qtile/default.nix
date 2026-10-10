@@ -12,9 +12,43 @@
   ...
 }:
 with lib;
+let
+  cfg = config.system.qtile_mod;
+  # Palettes vendored from Lucid (https://github.com/Sn3akyy1/lucid),
+  # Material You colour roles mapped onto the qtile theme slots.
+  paletteNames = [
+    "catppuccin-mocha"
+    "gruvbox"
+    "nightfox"
+    "nord"
+    "pywal"
+    "tokyo-night"
+  ];
+  paletteColors =
+    name:
+    let
+      p = builtins.fromJSON (builtins.readFile (./palettes + "/${name}.json"));
+    in
+    {
+      primaryLight = p.primary;
+      primaryDark = p.surface;
+      secondaryLight = p.secondary;
+      secondaryDark = p.surface_container_high;
+      neutral = p.surface_variant;
+    };
+in
 {
   options.system.qtile_mod = {
     enable = mkEnableOption "Enable qtile setup";
+    palette = mkOption {
+      type = types.enum ([ "custom" ] ++ paletteNames);
+      default = "custom";
+      description = ''
+        Colour palette for the bar/widgets. "custom" uses the theme.* values
+        below; anything else loads a vendored Lucid palette from ./palettes
+        (individual theme.* settings still override the palette).
+      '';
+    };
     monitors_list = mkOption {
       type = types.enum [1 2];
       default = 2;
@@ -50,7 +84,12 @@ with lib;
     };
   };
 
-  config = mkIf config.system.qtile_mod.enable {
+  config = mkMerge [
+    (mkIf (cfg.enable && cfg.palette != "custom") {
+      system.qtile_mod.theme = mapAttrs (_: mkDefault) (paletteColors cfg.palette);
+    })
+
+    (mkIf cfg.enable {
     environment.systemPackages = [
       pkgs.rofi
       pkgs.picom
@@ -93,5 +132,6 @@ with lib;
         };
       };
     };
-  };
+  })
+  ];
 }

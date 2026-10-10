@@ -54,8 +54,19 @@ The desktop theme is data, not code — change it in one place and it propagates
 # default.nix (root)
 config.system.qtile_mod = {
   enable = true;
-  monitors_list = 2;                                    # 1 or 2 monitors
-  background = ./system/tiling_manager/wallpapers/neon_shallows.png;
+  monitors_list = 2;   # 1 or 2 monitors
+  background = config.system.grub_theme.wallpaper;
+  palette = "gruvbox"; # vendored Lucid palette (see below)
+};
+```
+
+`palette` picks one of the Material You palettes vendored from [Lucid](https://github.com/Sn3akyy1/lucid) into `system/tiling_manager/qtile/palettes/`: `catppuccin-mocha`, `gruvbox`, `nightfox`, `nord`, `pywal`, `tokyo-night`. The palette's colour roles map onto the theme slots (`primary` → `primaryLight`, `surface` → `primaryDark`, `secondary` → `secondaryLight`, `surface_container_high` → `secondaryDark`, `surface_variant` → `neutral`).
+
+With `palette = "custom"` (the default) the explicit theme block is used instead — and any `theme.*` value you set always overrides the palette:
+
+```nix
+config.system.qtile_mod = {
+  palette = "custom";
   theme = {
     primaryLight   = "#a22a32";
     primaryDark    = "#1e272a";
