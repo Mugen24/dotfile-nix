@@ -1,3 +1,6 @@
 result
 nix.conf
 flake.lock
+
+# Large ML model weights (exceed GitHub's 100MB limit)
+*.pth
