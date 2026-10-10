@@ -19,6 +19,7 @@
   };
   config.gaming = {
     enable = true;
+    enableVR = true;
   };
   config.extra_keybinds.enable = true;
 }

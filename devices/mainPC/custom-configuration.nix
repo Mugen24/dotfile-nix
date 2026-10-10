@@ -1,7 +1,7 @@
 {config, ...}:
 {
   config.system.LLM.ollama = {
-    enable = true; 
+    enable = false; 
     download_path = "/media/Linux_storage_hdd/LLM";
   };
 }

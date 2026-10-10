@@ -88,8 +88,11 @@
     isNormalUser = true;
     description = "mugen";
     extraGroups = [ "networkmanager" "wheel" ];
+    uid = 1001;
     packages = with pkgs; [
     #  thunderbird
+        rsync
+        rclone
     ];
   };
 
@@ -104,6 +107,7 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+    virt-viewer
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -133,5 +137,19 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  networking.nameservers = [ "192.168.0.39" ];
+  networking.nameservers = [ "192.168.0.87" ];
+
+  programs.virt-manager.enable = true;
+
+  services.openssh = {
+      enable = true;
+      openFirewall = true; # <-- Crucial step to automatically open port 22
+  };
+
+  fileSystems."/mnt/truenas" = {
+      device = "192.168.0.73:/mnt/SASHD8-Platinum/John";
+      fsType = "nfs";
+      options = [ "x-systemd.automount" "noauto" "_netdev"];
+  };
+
 }

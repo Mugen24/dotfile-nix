@@ -30,30 +30,30 @@
       # };
 
 
-      services.xremap = {
-        # withX11 = true;
-        # debug = true;
-        enable = true;
-        # Modmap for single key rebinds
-        # config.modmap = [{
-        #   name = "Global";
-        #   remap = { "CapsLock" = "Esc"; };
-        # }];
+      # services.xremap = {
+      #   # withX11 = true;
+      #   # debug = true;
+      #   enable = true;
+      #   # Modmap for single key rebinds
+      #   # config.modmap = [{
+      #   #   name = "Global";
+      #   #   remap = { "CapsLock" = "Esc"; };
+      #   # }];
 
-        # Keymap for key combo rebinds
-        # config.keymap = [
-        #     {
-        #       name = "Map ctrl-n to down key";
-        #       remap = { "C-n" = "Down"; };
-        #       # application.only = [ "firefox" ];
-        #     }
-        #     {
-        #       name = "Map ctrl-p to up key";
-        #       remap = { "C-p" = "Up"; };
-        #       # application.only = [ "firefox" ];
-        #     }
-        # ];
-      };
+      #   # Keymap for key combo rebinds
+      #   # config.keymap = [
+      #   #     {
+      #   #       name = "Map ctrl-n to down key";
+      #   #       remap = { "C-n" = "Down"; };
+      #   #       # application.only = [ "firefox" ];
+      #   #     }
+      #   #     {
+      #   #       name = "Map ctrl-p to up key";
+      #   #       remap = { "C-p" = "Up"; };
+      #   #       # application.only = [ "firefox" ];
+      #   #     }
+      #   # ];
+      # };
     } 
   );
 }

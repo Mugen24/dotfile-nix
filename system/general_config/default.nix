@@ -61,4 +61,8 @@
     services.flatpak = {
         enable = true;
     };
+
+
+    # Enable vial
+    services.udev.packages = with pkgs; [ vial ];
 }

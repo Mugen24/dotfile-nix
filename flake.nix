@@ -19,6 +19,7 @@
         # System key remapper
         url = "github:xremap/nix-flake";
     };
+    kimi-code.url = "github:MoonshotAI/kimi-code";
   };
 
   outputs =
@@ -28,6 +29,7 @@
       home-manager,
       nixpkgs-unstable,
       compose2nix,
+      kimi-code,
       # airi-pkgs,
       ...
     }:
@@ -95,6 +97,11 @@
               # airi-pkgs.packages.x86_64-linux.default
             ];
           }
+          ({ ... }: {
+          environment.systemPackages = [
+            kimi-code.packages.x86_64-linux.kimi-code
+          ];
+          })
 
           home-manager.nixosModules.home-manager
           {
